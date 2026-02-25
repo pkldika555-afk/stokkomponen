@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\MasterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('komponen', [MasterController::class, 'index']);
+Route::get('/laporan/transaksi', [LaporanController::class, 'index'])->name('laporan.transaksi');

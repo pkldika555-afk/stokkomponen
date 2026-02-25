@@ -4,7 +4,6 @@
 <div class="min-h-screen bg-gray-950 text-gray-100 font-sans">
     <div class="max-w-2xl mx-auto px-6 py-10">
 
-        {{-- Header --}}
         <div class="mb-8">
             <a href="{{ route('komponen.index') }}"
                class="inline-flex items-center gap-2 text-gray-500 hover:text-gray-300 text-sm transition-colors mb-4">
@@ -18,7 +17,6 @@
             <p class="text-gray-500 text-sm mt-1">Isi data komponen baru yang akan ditambahkan ke inventaris</p>
         </div>
 
-        {{-- Validation Errors --}}
         @if($errors->any())
         <div class="bg-rose-500/10 border border-rose-500/30 rounded-xl px-5 py-4 mb-6">
             <div class="flex items-center gap-2 text-rose-400 font-semibold text-sm mb-2">
@@ -37,8 +35,6 @@
             </ul>
         </div>
         @endif
-
-        {{-- Form Card --}}
         <form action="{{ route('komponen.store') }}" method="POST" class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden">
             @csrf
 
@@ -49,18 +45,11 @@
 
             <div class="px-6 py-6 space-y-5">
 
-                {{-- Nama Komponen --}}
                 <div>
                     <label for="nama_komponen" class="block text-sm font-medium text-gray-300 mb-1.5">
                         Nama Komponen <span class="text-rose-400">*</span>
                     </label>
-                    <input
-                        type="text"
-                        id="nama_komponen"
-                        name="nama_komponen"
-                        value="{{ old('nama_komponen') }}"
-                        placeholder="Contoh: Resistor 10K Ohm"
-                        class="w-full bg-gray-800 border {{ $errors->has('nama_komponen') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition placeholder-gray-600"
+                    <input type="text" id="nama_komponen"name="nama_komponen" value="{{ old('nama_komponen') }}" placeholder="Contoh: Resistor 10K Ohm" class="w-full bg-gray-800 border {{ $errors->has('nama_komponen') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition placeholder-gray-600"
                     >
                     @error('nama_komponen')
                         <p class="mt-1.5 text-xs text-rose-400 flex items-center gap-1">
