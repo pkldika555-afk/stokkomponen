@@ -121,7 +121,7 @@
                     <i class="ri-arrow-left-right-fill text-base {{ request()->is('mutasi*') ? 'text-white' : 'text-slate-500 group-hover:text-sky-400' }} transition-colors"></i>
                     <span>Mutasi Barang</span>
                 </a>
-                <div class="relative group">
+                <!-- <div class="relative group">
                     <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200
                                 {{ request()->is('laporan*') ? 'bg-gradient-to-r from-sky-600/20 to-indigo-600/20 text-sky-300 border border-sky-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/70' }}">
                         <i class="ri-file-chart-line text-base {{ request()->is('laporan*') ? 'text-sky-400' : 'text-slate-500 group-hover:text-sky-400' }} transition-colors shrink-0"></i>
@@ -139,7 +139,7 @@
                         </div>
                         <i class="ri-arrow-down-s-line text-xs text-slate-600 shrink-0"></i>
                     </div>
-                </div>
+                </div> -->
 
             </div>
             <div class="px-3 py-4 border-t border-slate-800/60">

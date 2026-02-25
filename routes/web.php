@@ -3,6 +3,7 @@
 use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MasterController;
+use App\Http\Controllers\MutasiController;
 use App\Models\MasterKomponen;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +25,11 @@ Route::resource('komponen', MasterController::class);
 Route::resource('departemen', DepartemenController::class);   
 
 Route::get('/laporan/transaksi', [LaporanController::class, 'index'])->name('laporan.transaksi');
+
+Route::prefix('mutasi')->name('mutasi.')->group(function () {
+    Route::get('/',        [MutasiController::class, 'index'])  ->name('index');
+    Route::get('/create',  [MutasiController::class, 'create']) ->name('create');
+    Route::post('/',       [MutasiController::class, 'store'])  ->name('store');
+    Route::get('/rekap',   [MutasiController::class, 'rekap'])  ->name('rekap');
+    Route::get('/{id}',    [MutasiController::class, 'show'])   ->name('show');
+});
