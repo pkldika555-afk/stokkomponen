@@ -9,7 +9,7 @@
                 <h2 class="text-3xl font-bold text-white">Departemen</h2>
                 <p class="text-gray-500 text-sm mt-1">Kelola data Departemen</p>
             </div>
-            <a href="{{ route('departemen.create') }}"
+            <a href=""
                class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl px-5 py-2.5 text-sm transition-colors duration-200 mt-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
@@ -51,6 +51,7 @@
                         <tr class="bg-gray-800/60 text-xs uppercase tracking-wider text-gray-400">
                             <th class="text-left px-6 py-3 font-semibold w-10">#</th>
                             <th class="text-left px-6 py-3 font-semibold">Nama Departemen</th>
+                            <th class="text-left px-6 py-3 font-semibold">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-800">
@@ -68,7 +69,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
                                         </svg>
                                     </div>
-                                    <span class="font-medium text-gray-100">{{ $k->name_departemen }}</span>
+                                    <span class="font-medium text-gray-100">{{ $k->nama_departemen }}</span>
                                 </div>
                             </td>
 
@@ -101,7 +102,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/>
                                     </svg>
-                                    <p class="text-gray-500 text-sm">Belum ada data komponen</p>
+                                    <p class="text-gray-500 text-sm">Belum ada data departemen</p>
                                     <a href="" class="text-indigo-400 hover:text-indigo-300 text-xs underline underline-offset-2">Tambah sekarang</a>
                                 </div>
                             </td>
@@ -111,9 +112,9 @@
                 </table>
             </div>
 
-            @if(method_exists($komponen, 'links'))
+            @if(method_exists($departemen, 'links'))
             <div class="px-6 py-4 border-t border-gray-800">
-                {{ $komponen->appends(request()->query())->links() }}
+                {{ $departemen->appends(request()->query())->links() }}
             </div>
             @endif
         </div>

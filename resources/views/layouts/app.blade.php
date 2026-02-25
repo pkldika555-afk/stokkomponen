@@ -109,7 +109,7 @@
                     <i class="ri-cpu-line text-base {{ request()->is('komponen*') ? 'text-white' : 'text-slate-500 group-hover:text-sky-400' }} transition-colors"></i>
                     <span>Master Komponen</span>
                 </a>
-                <a href="/departemens"
+                <a href="/departemen"
                     class="sidebar__link group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200
                            {{ request()->is('departemen*') ? 'active-link text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800/70' }}">
                     <i class="ri-community-fill text-base {{ request()->is('departemen*') ? 'text-white' : 'text-slate-500 group-hover:text-sky-400' }} transition-colors"></i>

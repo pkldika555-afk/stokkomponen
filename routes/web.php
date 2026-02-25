@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MasterController;
 use App\Models\MasterKomponen;
@@ -20,4 +21,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::resource('komponen', MasterController::class);   
+Route::resource('departemen ', DepartemenController::class);
+
 Route::get('/laporan/transaksi', [LaporanController::class, 'index'])->name('laporan.transaksi');
