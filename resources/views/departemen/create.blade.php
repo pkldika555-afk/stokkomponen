@@ -38,7 +38,7 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ route('komponen.store') }}" method="POST"
+            <form action="{{ route('departemen.store') }}" method="POST"
                 class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden">
                 @csrf
 

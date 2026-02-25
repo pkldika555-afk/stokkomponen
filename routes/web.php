@@ -21,6 +21,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::resource('komponen', MasterController::class);   
-Route::resource('departemen ', DepartemenController::class);
+Route::resource('departemen', DepartemenController::class);   
 
 Route::get('/laporan/transaksi', [LaporanController::class, 'index'])->name('laporan.transaksi');

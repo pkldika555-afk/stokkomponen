@@ -9,7 +9,7 @@
                 <h2 class="text-3xl font-bold text-white">Departemen</h2>
                 <p class="text-gray-500 text-sm mt-1">Kelola data Departemen</p>
             </div>
-            <a href=""
+            <a href="{{ route('departemen.create') }}"
                class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl px-5 py-2.5 text-sm transition-colors duration-200 mt-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
@@ -33,7 +33,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
                 </svg>
                 <input type="text" name="search" value="{{ request('search') }}"
-                    placeholder="Cari komponen..."
+                    placeholder="Cari departemen..."
                     class="w-full bg-gray-900 border border-gray-800 text-gray-100 rounded-xl pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition placeholder-gray-600">
             </div>
         </form>
