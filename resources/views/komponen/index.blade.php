@@ -52,6 +52,7 @@
                             <th class="text-left px-6 py-3 font-semibold w-10">#</th>
                             <th class="text-left px-6 py-3 font-semibold">Nama Komponen</th>
                             <th class="text-left px-6 py-3 font-semibold">Kode</th>
+                            <th class="text-left px-6 py-3 font-semibold">Tipe</th>
                             <th class="text-left px-6 py-3 font-semibold">Satuan</th>
                             <th class="text-right px-6 py-3 font-semibold">Stok Minimal</th>
                             <th class="text-center px-6 py-3 font-semibold">Aksi</th>
@@ -76,10 +77,21 @@
                                 </div>
                             </td>
 
+                            
                             <td class="px-6 py-4">
                                 <code class="text-xs bg-gray-800 text-indigo-300 px-2 py-1 rounded-md font-mono">{{ $k->kode_komponen ?? '-' }}</code>
                             </td>
-
+                            
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <!-- <div class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0"> -->
+                                        <!-- <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
+                                        </svg> -->
+                                    <!-- </div> -->
+                                    <span class="font-medium text-gray-100">{{ $k->tipe }}</span>
+                                </div>
+                            </td>
                             <td class="px-6 py-4 text-gray-400">{{ $k->satuan ?? '-' }}</td>
                             <td class="px-6 py-4 text-right">
                                 <span class="font-mono font-semibold {{ ($k->stok_minimal ?? 0) > 0 ? 'text-emerald-400' : 'text-rose-400' }}">
@@ -89,7 +101,7 @@
                             
                             <td class="px-6 py-4">
                                 <div class="flex items-center justify-center gap-2">
-                                    <a href=""
+                                    <a href="{{ route('komponen.edit', $k->id) }}"
                                        class="w-8 h-8 flex items-center justify-center rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 hover:bg-amber-500/20 transition-colors duration-150"
                                        title="Edit">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

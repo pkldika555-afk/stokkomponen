@@ -28,4 +28,27 @@ class MasterController extends Controller
         MasterKomponen::create($validate);
         return redirect()->route('komponen.index')->with('success','Data berhasil ditambahkan');
     }
+    public function edit($id)
+    {
+        $komponen = MasterKomponen::findOrFail($id);
+        return view('komponen.edit', compact('komponen'));
+    }
+    public function update(Request $request, $id)
+    {
+        $validate = $request->validate([
+            'kode_komponen' => 'required|max:255',
+            'nama_komponen'=> 'required',
+            'tipe'=> 'required',
+            'satuan'=> 'required',
+            'stok_minimal'=> 'required',
+        ]);
+        MasterKomponen::findOrFail( $id )->update($validate);
+        return redirect()->route('komponen.index')->with('success','Data berhasil diubah');
+    }
+    public function destroy($id)
+    {
+        $komponen = MasterKomponen::findOrFail($id);
+        $komponen->delete();
+        return redirect()->route('komponen.index')->with('success','Data berhasil dihapus');
+    }
 }

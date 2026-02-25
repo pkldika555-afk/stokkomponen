@@ -134,7 +134,7 @@
                         </div>
                     </div>
 
-                    <div>
+                    <!-- <div>
                         <label for="lokasi" class="block text-sm font-medium text-gray-300 mb-1.5">
                             Lokasi Penyimpanan
                         </label>
@@ -146,9 +146,9 @@
                             <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p>
                         @enderror
 
-                    </div>
+                    </div> -->
 
-                    <div>
+                    <!-- <div>
                         <label for="keterangan" class="block text-sm font-medium text-gray-300 mb-1.5">
                             Keterangan
                         </label>
@@ -158,7 +158,7 @@
                         @error('keterangan')
                             <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p>
                         @enderror
-                    </div>
+                    </div> -->
 
                 </div>
 
