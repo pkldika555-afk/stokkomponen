@@ -13,23 +13,13 @@ return new class extends Migration
     {
         Schema::create('mutasi_barang', function (Blueprint $table) {
             $table->id('id_mutasi');
-
             $table->foreignId('id_komponen')->constrained('master_komponen')->cascadeOnDelete();
-
             $table->date('tanggal');
             $table->integer('jumlah');
-
-            $table->foreignId('id_departemen_asal')
-                ->constrained('departemen');
-
-            $table->foreignId('id_departemen_tujuan')
-                ->constrained('departemen');
-
-            $table->enum('jenis', ['pembelian', 'internal', 'retur', 'repair_kembali'])
-                ->default('internal');
-
+            $table->foreignId('id_departemen_asal')->constrained('departemen');
+            $table->foreignId('id_departemen_tujuan')->constrained('departemen');
+            $table->enum('jenis', ['pembelian', 'internal', 'retur', 'repair_kembali'])->default('internal');
             $table->text('keterangan')->nullable();
-
             $table->timestamps();
         });
     }
