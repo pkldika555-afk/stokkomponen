@@ -132,14 +132,8 @@
                         <label for="tipe" class="block text-sm font-medium text-gray-300 mb-1.5">
                             Tipe <span class="text-rose-400">*</span>
                         </label>
-                        <select id="tipe" name="tipe"
-                            class="w-full bg-gray-800 border {{ $errors->has('tipe') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
-                            <option value="">— Pilih Tipe —</option>
-                            @foreach(['consumable', 'repairable'] as $s)
-                                <option value="{{ $s }}" {{ old('tipe') == $s ? 'selected' : '' }}>{{ strtoupper($s) }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <input type="text" id="tipe" name="tipe" value="{{ old('tipe', $komponen->tipe) }}" placeholder="Contoh: DDIP"
+                            class="w-full bg-gray-800 border {{ $errors->has('tipe') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition placeholder-gray-600 font-mono">
                         @error('tipe')
                             <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p>
                         @enderror
