@@ -19,7 +19,8 @@ class MasterKomponen extends Model
         'lokasi',
         'id_departemen'
     ];
-
+    const JENIS_MASUK = ['pembelian', 'retur', 'repair_kembali' ];
+    const JENIS_KELUAR = ['internal'];
     public function mutasi()
     {
         return $this->hasMany(MutasiBarang::class, 'id_komponen');
@@ -27,5 +28,22 @@ class MasterKomponen extends Model
     public function departemen()
     {
         return $this->belongsTo(Departemen::class,'id_departemen');
+    }
+        public function getStokAttribute(): int
+    {
+        $masuk = $this->mutasi()
+            ->whereIn('jenis', MutasiBarang::JENIS_MASUK)
+            ->sum('jumlah');
+
+        $keluar = $this->mutasi()
+            ->whereIn('jenis', MutasiBarang::JENIS_KELUAR)
+            ->sum('jumlah');
+
+        return (int) ($masuk - $keluar);
+    }
+
+    public function isStokRendah(): bool
+    {
+        return $this->stok <= $this->stok_minimal;
     }
 }

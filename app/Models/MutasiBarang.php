@@ -17,7 +17,8 @@ class MutasiBarang extends Model
         'jenis',
         'keterangan'
     ];
-
+   const JENIS_MASUK = ['pembelian', 'retur', 'repair_kembali' ];
+   const JENIS_KELUAR = ['internal'];
     public function komponen()
     {
         return $this->belongsTo(MasterKomponen::class, 'id_komponen');
@@ -32,4 +33,5 @@ class MutasiBarang extends Model
     {
         return $this->belongsTo(Departemen::class, 'id_departemen_tujuan');
     }
+
 }

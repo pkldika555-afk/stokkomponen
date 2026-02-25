@@ -101,7 +101,7 @@
                 <tbody class="divide-y divide-gray-800/60">
                     @forelse($mutasi as $m)
                         @php
-                            $isMasuk = in_array($m->jenis, \App\Models\MutasiBarang::JENIS_MASUK);
+                            $isMasuk = in_array($m->jenis, \App\Models\MasterKomponen::JENIS_MASUK);
                             $jenisColor = match($m->jenis) {
                                 'pembelian'      => 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
                                 'internal'       => 'text-amber-400 bg-amber-500/10 border-amber-500/20',
@@ -112,7 +112,7 @@
                         @endphp
                         <tr class="hover:bg-gray-800/30 transition-colors">
                             <td class="px-5 py-3.5">
-                                <p class="text-gray-200 text-sm font-medium">{{ $m->tanggal->format('d M Y') }}</p>
+                                <p class="text-gray-200 text-sm font-medium">{{ $m->tanggal }}</p>
                                 <p class="text-gray-600 text-xs">{{ $m->created_at?->format('H:i') }}</p>
                             </td>
                             <td class="px-5 py-3.5">
