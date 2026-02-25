@@ -19,5 +19,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('komponen', MasterKomponen::class);
+Route::resource('komponen', MasterController::class);   
 Route::get('/laporan/transaksi', [LaporanController::class, 'index'])->name('laporan.transaksi');

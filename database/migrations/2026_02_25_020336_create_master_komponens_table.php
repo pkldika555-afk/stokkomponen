@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('kode_komponen')->unique();
             $table->string('nama_komponen');
-            $table->enum('tipe', ['consumable', 'repairable'])->default('consumable');
+            $table->string('tipe');
+            // $table->enum('tipe', ['consumable', 'repairable'])->default('consumable');
             $table->string('satuan')->nullable();
             $table->integer('stok_minimal')->default(0);
             $table->timestamps();

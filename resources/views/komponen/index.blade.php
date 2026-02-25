@@ -9,7 +9,7 @@
                 <h2 class="text-3xl font-bold text-white">Komponen</h2>
                 <p class="text-gray-500 text-sm mt-1">Kelola data komponen inventaris</p>
             </div>
-            <a href=""
+            <a href="{{ route('komponen.create') }}"
                class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl px-5 py-2.5 text-sm transition-colors duration-200 mt-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
@@ -53,7 +53,7 @@
                             <th class="text-left px-6 py-3 font-semibold">Nama Komponen</th>
                             <th class="text-left px-6 py-3 font-semibold">Kode</th>
                             <th class="text-left px-6 py-3 font-semibold">Satuan</th>
-                            <th class="text-right px-6 py-3 font-semibold">Stok</th>
+                            <th class="text-right px-6 py-3 font-semibold">Stok Minimal</th>
                             <th class="text-center px-6 py-3 font-semibold">Aksi</th>
                         </tr>
                     </thead>
@@ -77,13 +77,13 @@
                             </td>
 
                             <td class="px-6 py-4">
-                                <code class="text-xs bg-gray-800 text-indigo-300 px-2 py-1 rounded-md font-mono">{{ $k->kode ?? '-' }}</code>
+                                <code class="text-xs bg-gray-800 text-indigo-300 px-2 py-1 rounded-md font-mono">{{ $k->kode_komponen ?? '-' }}</code>
                             </td>
 
                             <td class="px-6 py-4 text-gray-400">{{ $k->satuan ?? '-' }}</td>
                             <td class="px-6 py-4 text-right">
-                                <span class="font-mono font-semibold {{ ($k->stok ?? 0) > 0 ? 'text-emerald-400' : 'text-rose-400' }}">
-                                    {{ number_format($k->stok ?? 0) }}
+                                <span class="font-mono font-semibold {{ ($k->stok_minimal ?? 0) > 0 ? 'text-emerald-400' : 'text-rose-400' }}">
+                                    {{ number_format($k->stok_minimal ?? 0) }}
                                 </span>
                             </td>
                             
