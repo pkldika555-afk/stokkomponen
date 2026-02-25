@@ -75,14 +75,14 @@
 
                             <td class="px-6 py-4">
                                 <div class="flex items-center justify-center gap-2">
-                                    <a href="{{ route('komponen.edit', $k->id) }}"
+                                    <a href="{{ route('departemen.edit', $k->id) }}"
                                        class="w-8 h-8 flex items-center justify-center rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 hover:bg-amber-500/20 transition-colors duration-150"
                                        title="Edit">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
                                         </svg>
                                     </a>
-                                    <form action="{{ route('komponen.destroy', $k->id) }}" method="POST" onsubmit="return confirm('Hapus komponen ini?')">
+                                    <form action="{{ route('departemen.destroy', $k->id) }}" method="POST" onsubmit="return confirm('Hapus departemen ini?')">
                                         @csrf @method('DELETE')
                                         <button type="submit"
                                             class="w-8 h-8 flex items-center justify-center rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 hover:bg-rose-500/20 transition-colors duration-150"

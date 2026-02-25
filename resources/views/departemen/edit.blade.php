@@ -57,13 +57,13 @@
                 </div>  
             </div>
 
-            <form action="{{ route('komponen.update', $komponen->id) }}" method="POST"
+            <form action="{{ route('departemen.update', $departemen->id) }}" method="POST"
                 class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden">
                 @csrf
                 @method('PUT')
 
                 <div class="px-6 py-5 border-b border-gray-800">
-                    <p class="text-sm font-semibold text-gray-200">Informasi Komponen</p>
+                    <p class="text-sm font-semibold text-gray-200">Informasi Departemen</p>
                     <p class="text-xs text-gray-500 mt-0.5">Ubah data yang diperlukan lalu simpan</p>
                 </div>
 
