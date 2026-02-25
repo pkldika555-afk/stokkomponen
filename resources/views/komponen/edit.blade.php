@@ -55,7 +55,8 @@
                         {{ $komponen->updated_at ? $komponen->updated_at->format('d M Y') : '-' }}
                     </p>
                     <p class="text-xs text-gray-600 mt-0.5">
-                        {{ $komponen->updated_at ? $komponen->updated_at->format('H:i') : '' }}</p>
+                        {{ $komponen->updated_at ? $komponen->updated_at->format('H:i') : '' }}
+                    </p>
                 </div>
                 <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center">
                     <p class="text-xs text-gray-500 mb-1">ID Komponen</p>
@@ -118,7 +119,8 @@
                                 <option value="">— Pilih Satuan —</option>
                                 @foreach(['pcs', 'unit', 'buah', 'set', 'meter', 'roll', 'kg', 'liter', 'box', 'pak'] as $s)
                                     <option value="{{ $s }}" {{ old('satuan', $komponen->satuan) == $s ? 'selected' : '' }}>
-                                        {{ strtoupper($s) }}</option>
+                                        {{ strtoupper($s) }}
+                                    </option>
                                 @endforeach
                             </select>
                             @error('satuan')
@@ -182,29 +184,53 @@
                                 Barang</a>
                         </p>
                     </div>
-
-                    <!-- <div>
-                        <label for="lokasi" class="block text-sm font-medium text-gray-300 mb-1.5">
-                            Lokasi Penyimpanan
+                    <div>
+                        <label for="rak" class="block text-sm font-medium text-gray-300 mb-1.5">
+                            Rak
                         </label>
-                        <input type="text" id="lokasi" name="lokasi" value="{{ old('lokasi', $komponen->lokasi) }}" placeholder="Contoh: Rak A - Laci 3" class="w-full bg-gray-800 border {{ $errors->has('lokasi') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition placeholder-gray-600"
-                        >
+
+                        <div class="relative">
+                            <input type="number" id="rak" name="rak" value="{{ old('rak', $komponen->rak) }}" min="0"
+                                class="w-full bg-gray-800 border {{ $errors->has('rak') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 pr-16 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition font-mono">
+                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-500">nomor</span>
+                        </div>
+                        @error('rak')
+                            <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="lokasi" class="block text-sm font-medium text-gray-300 mb-1.5">
+                            Lot
+                        </label>
+
+                        <div class="relative">
+                            <input type="number" id="lokasi" name="lokasi" value="{{ old('lokasi', $komponen->lokasi) }}"
+                                min="0"
+                                class="w-full bg-gray-800 border {{ $errors->has('lokasi') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 pr-16 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition font-mono">
+                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-500">nomor</span>
+                        </div>
                         @error('lokasi')
                             <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p>
                         @enderror
-                    </div> -->
-                    <!-- 
+                    </div>
                     <div>
-                        <label for="keterangan" class="block text-sm font-medium text-gray-300 mb-1.5">
-                            Keterangan
+                        <label for="id_departemen" class="block text-xs font-medium text-gray-400 mb-1.5">
+                            Bagian <span class="text-rose-400">*</span>
                         </label>
-
-                        <textarea id="keterangan"  name="keterangan" rows="3" placeholder="Deskripsi tambahan komponen (opsional)..." class="w-full bg-gray-800 border {{ $errors->has('keterangan') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition placeholder-gray-600 resize-none">{{ old('keterangan', $komponen->keterangan) }}</textarea>
-
-                        @error('keterangan')
-                            <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p>
+                        <select id="id_departemen" name="id_departemen"
+                            class="w-full bg-gray-800 border {{ $errors->has('id_departemen') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+                            <option value="">— Pilih Bagian —</option>
+                            @foreach($departemen as $d)
+                                <option value="{{ $d->id }}" {{ old('id_departemen', $komponen->id_departemen) == $d->id ? 'selected' : '' }}>
+                                    {{ $d->nama_departemen }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('id_departemen')
+                            <p class="mt-1 text-xs text-rose-400">{{ $message }}</p>
                         @enderror
-                    </div> -->
+                    </div>
 
                 </div>
                 <div class="px-6 py-4 border-t border-gray-800 bg-gray-900/50 flex items-center justify-between gap-3">
@@ -224,9 +250,10 @@
                         Simpan Perubahan
                     </button>
                 </div>
-
-            </form>
-
         </div>
+
+        </form>
+
+    </div>
     </div>
 @endsection

@@ -14,9 +14,7 @@ return new class extends Migration
         Schema::create('mutasi_barang', function (Blueprint $table) {
             $table->id('id_mutasi');
 
-            $table->foreignId('id_komponen')
-                ->constrained('master_komponen')
-                ->cascadeOnDelete();
+            $table->foreignId('id_komponen')->constrained('master_komponen')->cascadeOnDelete();
 
             $table->date('tanggal');
             $table->integer('jumlah');

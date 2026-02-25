@@ -55,6 +55,10 @@
                             <th class="text-left px-6 py-3 font-semibold">Tipe</th>
                             <th class="text-left px-6 py-3 font-semibold">Satuan</th>
                             <th class="text-right px-6 py-3 font-semibold">Stok Minimal</th>
+                            <th class="text-right px-6 py-3 font-semibold">Rak</th>
+                            <th class="text-right px-6 py-3 font-semibold">Lot</th>
+                            <th class="text-center px-6 py-3 font-semibold">Bagian</th>
+                            <th class="text-center px-6 py-3 font-semibold">Tanggal input</th>
                             <th class="text-center px-6 py-3 font-semibold">Aksi</th>
                         </tr>
                     </thead>
@@ -98,7 +102,10 @@
                                     {{ number_format($k->stok_minimal ?? 0) }}
                                 </span>
                             </td>
-                            
+                            <td class="px-6 py-4 text-gray-400">{{ $k->rak ?? '-' }}</td>
+                            <td class="px-6 py-4 text-gray-400">{{ $k->lokasi ?? '-' }}</td>
+                            <td class="px-6 py-4 text-gray-400">{{ $k->departemen->nama_departemen ?? '-' }}</td>
+                            <td class="px-6 py-4 text-gray-400">{{ $k->created_at ?? '-' }}</td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center justify-center gap-2">
                                     <a href="{{ route('komponen.edit', $k->id) }}"

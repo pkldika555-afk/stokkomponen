@@ -4,7 +4,6 @@
 <div class="min-h-screen bg-gray-950 text-gray-100 font-sans">
     <div class="max-w-6xl mx-auto px-6 py-10">
 
-        {{-- Header --}}
         <div class="flex items-start justify-between mb-8">
             <div>
                 <p class="text-xs uppercase tracking-[0.3em] text-violet-400 font-semibold mb-1">Master Data</p>
@@ -20,7 +19,6 @@
             </a>
         </div>
 
-        {{-- Alert --}}
         @if(session('success'))
         <div class="flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-xl px-5 py-3.5 mb-6 text-sm">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -30,7 +28,6 @@
         </div>
         @endif
 
-        {{-- Stats Row --}}
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
             <div class="bg-gray-900 border border-gray-800 rounded-xl p-4">
                 <p class="text-xs text-gray-500 mb-1">Total Departemen</p>
@@ -46,7 +43,6 @@
             </div>
         </div>
 
-        {{-- Search --}}
         <form method="GET" class="mb-5">
             <div class="relative">
                 <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

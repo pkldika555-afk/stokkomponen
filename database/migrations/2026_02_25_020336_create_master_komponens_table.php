@@ -18,8 +18,11 @@ return new class extends Migration
             $table->string('tipe');
             // $table->enum('tipe', ['consumable', 'repairable'])->default('consumable');
             $table->string('satuan')->nullable();
+            $table->integer('rak');
+            $table->integer('lokasi');
             $table->integer('stok_minimal')->default(0);
             $table->timestamps();
+            $table->foreignId('departemen_id')->nullable()->constrained()->nullOnDelete();
         });
     }
 
