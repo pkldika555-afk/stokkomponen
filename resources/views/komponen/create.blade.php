@@ -1,0 +1,175 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="min-h-screen bg-gray-950 text-gray-100 font-sans">
+    <div class="max-w-2xl mx-auto px-6 py-10">
+
+        {{-- Header --}}
+        <div class="mb-8">
+            <a href="{{ route('komponen.index') }}"
+               class="inline-flex items-center gap-2 text-gray-500 hover:text-gray-300 text-sm transition-colors mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                </svg>
+                Kembali ke Daftar Komponen
+            </a>
+            <p class="text-xs uppercase tracking-[0.3em] text-indigo-400 font-semibold mb-1">Master Data</p>
+            <h2 class="text-3xl font-bold text-white">Tambah Komponen</h2>
+            <p class="text-gray-500 text-sm mt-1">Isi data komponen baru yang akan ditambahkan ke inventaris</p>
+        </div>
+
+        {{-- Validation Errors --}}
+        @if($errors->any())
+        <div class="bg-rose-500/10 border border-rose-500/30 rounded-xl px-5 py-4 mb-6">
+            <div class="flex items-center gap-2 text-rose-400 font-semibold text-sm mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                Terdapat kesalahan input
+            </div>
+            <ul class="space-y-1">
+                @foreach($errors->all() as $error)
+                    <li class="text-rose-300 text-xs flex items-start gap-1.5">
+                        <span class="mt-0.5 w-1 h-1 rounded-full bg-rose-400 shrink-0"></span>
+                        {{ $error }}
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
+        {{-- Form Card --}}
+        <form action="{{ route('komponen.store') }}" method="POST" class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden">
+            @csrf
+
+            <div class="px-6 py-5 border-b border-gray-800">
+                <p class="text-sm font-semibold text-gray-200">Informasi Komponen</p>
+                <p class="text-xs text-gray-500 mt-0.5">Lengkapi semua field yang diperlukan</p>
+            </div>
+
+            <div class="px-6 py-6 space-y-5">
+
+                {{-- Nama Komponen --}}
+                <div>
+                    <label for="nama_komponen" class="block text-sm font-medium text-gray-300 mb-1.5">
+                        Nama Komponen <span class="text-rose-400">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="nama_komponen"
+                        name="nama_komponen"
+                        value="{{ old('nama_komponen') }}"
+                        placeholder="Contoh: Resistor 10K Ohm"
+                        class="w-full bg-gray-800 border {{ $errors->has('nama_komponen') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition placeholder-gray-600"
+                    >
+                    @error('nama_komponen')
+                        <p class="mt-1.5 text-xs text-rose-400 flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01"/></svg>
+                            {{ $message }}
+                        </p>
+                    @enderror
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="kode" class="block text-sm font-medium text-gray-300 mb-1.5">
+                            Kode Komponen
+                        </label>
+                        <input type="text" id="kode" name="kode" value="{{ old('kode') }}" placeholder="Contoh: KMP-001" class="w-full bg-gray-800 border {{ $errors->has('kode') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition placeholder-gray-600 font-mono">
+                        @error('kode')
+                            <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="satuan" class="block text-sm font-medium text-gray-300 mb-1.5">
+                            Satuan <span class="text-rose-400">*</span>
+                        </label>
+                        <select id="satuan" name="satuan" class="w-full bg-gray-800 border {{ $errors->has('satuan') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+                            <option value="">— Pilih Satuan —</option>
+                            @foreach(['pcs', 'unit', 'buah', 'set', 'meter', 'roll', 'kg', 'liter', 'box', 'pak'] as $s)
+                                <option value="{{ $s }}" {{ old('satuan') == $s ? 'selected' : '' }}>{{ strtoupper($s) }}</option>
+                            @endforeach
+                        </select>
+                        @error('satuan')
+                            <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+
+                        <label for="stok" class="block text-sm font-medium text-gray-300 mb-1.5">
+                            Stok Awal
+                        </label>
+
+                        <div class="relative">
+                            <input type="number" id="stok" name="stok" value="{{ old('stok', 0) }}" min="0" class="w-full bg-gray-800 border {{ $errors->has('stok') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 pr-16 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition font-mono">
+                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-500">unit</span>
+                        </div>
+
+                        @error('stok')
+                            <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="stok_minimum" class="block text-sm font-medium text-gray-300 mb-1.5">
+                            Stok Minimum
+                            <span class="ml-1 text-xs text-gray-500 font-normal">(alert)</span>
+                        </label>
+                        
+                        <div class="relative">
+                            <input type="number" id="stok_minimum" name="stok_minimum" value="{{ old('stok_minimum', 0) }}" min="0" class="w-full bg-gray-800 border {{ $errors->has('stok_minimum') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 pr-16 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition font-mono">
+                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-500">unit</span>
+                        </div>
+                        @error('stok_minimum')
+                            <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div>
+                    <label for="lokasi" class="block text-sm font-medium text-gray-300 mb-1.5">
+                        Lokasi Penyimpanan
+                    </label>
+
+                    <input type="text" id="lokasi" name="lokasi" value="{{ old('lokasi') }}" placeholder="Contoh: Rak A - Laci 3" class="w-full bg-gray-800 border {{ $errors->has('lokasi') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition placeholder-gray-600">
+                    @error('lokasi')
+                        <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p>
+                    @enderror
+
+                </div>
+
+                <div>
+                    <label for="keterangan" class="block text-sm font-medium text-gray-300 mb-1.5">
+                        Keterangan
+                    </label>
+                    <textarea id="keterangan" name="keterangan" rows="3" placeholder="Deskripsi tambahan komponen (opsional)..." class="w-full bg-gray-800 border {{ $errors->has('keterangan') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition placeholder-gray-600 resize-none">{{ old('keterangan') }}</textarea>
+                    @error('keterangan')
+                        <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+            </div>
+
+            <div class="px-6 py-4 border-t border-gray-800 bg-gray-900/50 flex items-center justify-between gap-3">
+                <a href="{{ route('komponen.index') }}"
+                   class="px-5 py-2.5 rounded-xl border border-gray-700 text-gray-400 hover:text-gray-200 hover:border-gray-600 text-sm font-medium transition-colors">
+                    Batal
+                </a>
+                <button type="submit"
+                    class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl px-6 py-2.5 text-sm transition-colors duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    Simpan Komponen
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+@endsection
