@@ -62,13 +62,11 @@
                         <select name="jenis"
                             class="w-full bg-gray-800 border border-gray-700 text-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500">
                             <option value="">Semua Jenis</option>
-                            <option value="pengambilan" {{ request('jenis') == 'pengambilan' ? 'selected' : '' }}>Pengambilan
-                            </option>
-                            <option value="internal" {{ request('jenis') == 'internal' ? 'selected' : '' }}>Pemakaian Internal
-                            </option>
+                            <option value="pengambilan" {{ request('jenis') == 'pengambilan' ? 'selected' : '' }}>Pengambilan</option>
+                            <option value="pembelian" {{ request('jenis') == 'pembelian' ? 'selected' : '' }}>Pembelian</option>
+                            <option value="internal" {{ request('jenis') == 'internal' ? 'selected' : '' }}>Pemakaian Internal</option>
                             <option value="retur" {{ request('jenis') == 'retur' ? 'selected' : '' }}>Retur</option>
-                            <option value="repair_kembali" {{ request('jenis') == 'repair_kembali' ? 'selected' : '' }}>Repair
-                                Kembali</option>
+                            <option value="repair_kembali" {{ request('jenis') == 'repair_kembali' ? 'selected' : '' }}>Repair Kembali</option>
                         </select>
                     </div>
                     <div>
@@ -118,10 +116,10 @@
                     <tbody class="divide-y divide-gray-800/60">
                         @forelse($mutasi as $m)
                             @php
-                                $isMasuk = in_array($m->jenis, \App\Models\MasterKomponen::JENIS_MASUK);
+                                // determine sign using MutasiBarang constants
+                                $isMasuk = in_array($m->jenis, \App\Models\MutasiBarang::JENIS_MASUK);
                                 $jenisColor = match ($m->jenis) {
-                                    'pengambilan' => 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
-                                    'internal' => 'text-amber-400 bg-amber-500/10 border-amber-500/20',
+                                    'pengambilan' => 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',                                    'pembelian' => 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',                                    'internal' => 'text-amber-400 bg-amber-500/10 border-amber-500/20',
                                     'retur' => 'text-sky-400 bg-sky-500/10 border-sky-500/20',
                                     'repair_kembali' => 'text-violet-400 bg-violet-500/10 border-violet-500/20',
                                     default => 'text-gray-400 bg-gray-800 border-gray-700',
@@ -154,12 +152,12 @@
                                     </span>
                                     <p class="text-xs text-gray-600">{{ $m->komponen->satuan ?? 'unit' }}</p>
                                 </td>
-                                <td class="px-6 py-4 text-right">
-                                    <span
-                                        class="font-mono font-semibold {{ ($k->stok ?? 0) > 0 ? 'text-emerald-400' : 'text-rose-400' }}">
-                                        {{ number_format($k->stok ?? 0) }}
-                                    </span>
-                                </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <span
+                                            class="font-mono font-semibold {{ ($m->komponen->stok ?? 0) > 0 ? 'text-emerald-400' : 'text-rose-400' }}">
+                                            {{ number_format($m->komponen->stok ?? 0) }}
+                                        </span>
+                                    </td>
                                 <td class="px-5 py-3.5 text-center">
                                     <a href="{{ route('mutasi.show', $m->id) }}"
                                         class="inline-flex items-center gap-1 text-xs text-indigo-400 hover:text-indigo-300 transition-colors">

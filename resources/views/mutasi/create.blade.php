@@ -57,7 +57,8 @@
                             <option value="">— Pilih Komponen —</option>
                             @foreach($komponen as $k)
                                 <option value="{{ $k->id }}" data-stok="{{ $k->stok }}" data-satuan="{{ $k->satuan }}"
-                                    data-stok-minimal="{{ $k->stok_minimal }}" {{ old('id_komponen') == $k->id ? 'selected' : '' }}>
+                                    data-stok-minimal="{{ $k->stok_minimal }}" data-departemen="{{ $k->departemen_id }}"
+                                    {{ old('id_komponen') == $k->id ? 'selected' : '' }}>
                                     {{ $k->nama_komponen }} ({{ $k->kode_komponen }})
                                 </option>
                             @endforeach
@@ -211,7 +212,37 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             const sel = document.getElementById('id_komponen');
-            if (sel.value) updateStokInfo(sel);
+            if (sel.value) {
+                updateStokInfo(sel);
+                updateTujuan(sel);
+            }
+        });
+
+        function updateTujuan(select) {
+            const opt = select.options[select.selectedIndex];
+            const tujuanSel = document.getElementById('id_departemen_tujuan');
+            const deptId = opt.dataset.departemen;
+
+            const existingHidden = document.getElementById('id_departemen_tujuan_hidden');
+            if (existingHidden) existingHidden.remove();
+
+            if (deptId) {
+                tujuanSel.value = deptId;
+                tujuanSel.setAttribute('disabled', 'disabled');
+                const hid = document.createElement('input');
+                hid.type = 'hidden';
+                hid.name = 'id_departemen_tujuan';
+                hid.id = 'id_departemen_tujuan_hidden';
+                hid.value = deptId;
+                tujuanSel.after(hid);
+            } else {
+                tujuanSel.removeAttribute('disabled');
+            }
+        }
+
+        document.getElementById('id_komponen').addEventListener('change', function (e) {
+            updateStokInfo(this);
+            updateTujuan(this);
         });
     </script>
 @endsection
