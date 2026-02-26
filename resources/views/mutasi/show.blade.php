@@ -56,7 +56,6 @@
                         ['Tanggal', date('d F Y', strtotime($mutasi->tanggal))],
                         ['Dari', $mutasi->departemenAsal->nama_departemen ?? '-'],
                         ['Ke', $mutasi->departemenTujuan->nama_departemen ?? '-'],
-                        ['Keterangan', $mutasi->keterangan ?? '-'],
                         ['Dicatat', $mutasi->created_at?->format('d M Y, H:i') ?? '-'],
                     ];
                 @endphp
