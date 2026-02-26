@@ -132,7 +132,8 @@
                         <label for="tipe" class="block text-sm font-medium text-gray-300 mb-1.5">
                             Tipe <span class="text-rose-400">*</span>
                         </label>
-                        <input type="text" id="tipe" name="tipe" value="{{ old('tipe', $komponen->tipe) }}" placeholder="Contoh: DDIP"
+                        <input type="text" id="tipe" name="tipe" value="{{ old('tipe', $komponen->tipe) }}"
+                            placeholder="Contoh: DDIP"
                             class="w-full bg-gray-800 border {{ $errors->has('tipe') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition placeholder-gray-600 font-mono">
                         @error('tipe')
                             <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p>
@@ -174,7 +175,8 @@
                         </div>
                         <p class="mt-1.5 text-xs text-gray-600">
                             Untuk mengubah stok, gunakan fitur
-                            <a href="{{ route('mutasi.create') }}" class="text-indigo-400 hover:text-indigo-300 underline underline-offset-2">Mutasi
+                            <a href="{{ route('mutasi.create') }}"
+                                class="text-indigo-400 hover:text-indigo-300 underline underline-offset-2">Mutasi
                                 Barang</a>
                         </p>
                     </div>

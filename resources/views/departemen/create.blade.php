@@ -67,7 +67,7 @@
                         @enderror
                     </div>
 
-                    
+
                 </div>
 
                 <div class="px-6 py-4 border-t border-gray-800 bg-gray-900/50 flex items-center justify-between gap-3">

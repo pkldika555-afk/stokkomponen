@@ -47,14 +47,15 @@
                         {{ $departemen->updated_at ? $departemen->updated_at->format('d M Y') : '-' }}
                     </p>
                     <p class="text-xs text-gray-600 mt-0.5">
-                        {{ $departemen->updated_at ? $departemen->updated_at->format('H:i') : '' }}</p>
+                        {{ $departemen->updated_at ? $departemen->updated_at->format('H:i') : '' }}
+                    </p>
                 </div>
                 <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center">
                     <p class="text-xs text-gray-500 mb-1">ID Departemen</p>
                     <code
                         class="text-sm font-mono text-indigo-400">#{{ str_pad($departemen->id, 4, '0', STR_PAD_LEFT) }}</code>
                     <p class="text-xs text-gray-600 mt-0.5">sistem</p>
-                </div>  
+                </div>
             </div>
 
             <form action="{{ route('departemen.update', $departemen->id) }}" method="POST"
@@ -73,8 +74,7 @@
                             Nama Departemen <span class="text-rose-400">*</span>
                         </label>
                         <input type="text" id="nama_departemen" name="nama_departemen"
-                            value="{{ old('nama_departemen', $departemen->nama_departemen) }}"
-                            placeholder="Contoh: Sizing"
+                            value="{{ old('nama_departemen', $departemen->nama_departemen) }}" placeholder="Contoh: Sizing"
                             class="w-full bg-gray-800 border {{ $errors->has('nama_departemen') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition placeholder-gray-600">
                         @error('nama_departemen')
                             <p class="mt-1.5 text-xs text-rose-400 flex items-center gap-1">
