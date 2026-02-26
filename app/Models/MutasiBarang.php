@@ -17,8 +17,10 @@ class MutasiBarang extends Model
         'jenis',
         'keterangan'
     ];
-   const JENIS_MASUK = ['pembelian', 'retur', 'repair_kembali' ];
-   const JENIS_KELUAR = ['internal'];
+    // Jenis yang menambah stok
+    const JENIS_MASUK = ['pengambilan', 'retur', 'repair_kembali'];
+    // Jenis yang mengurangi stok
+    const JENIS_KELUAR = ['internal'];
     public function komponen()
     {
         return $this->belongsTo(MasterKomponen::class, 'id_komponen');
@@ -40,7 +42,7 @@ class MutasiBarang extends Model
     public function getLabelJenisAttribute()
     {
         return match($this->jenis) {
-            'pembelian' => 'Pembelian',
+            'pengambilan' => 'Pengambilan',
             'internal' => 'Pemakaian Internal',
             'retur' => 'retur',
             'repair_kembali' => 'Repair Kembali',

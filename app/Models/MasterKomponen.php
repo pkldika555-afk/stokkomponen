@@ -14,6 +14,7 @@ class MasterKomponen extends Model
         'nama_komponen',
         'tipe',
         'satuan',
+        'stok',
         'stok_minimal',
         'rak',
         'lokasi',
@@ -28,18 +29,6 @@ class MasterKomponen extends Model
     public function departemen()
     {
         return $this->belongsTo(Departemen::class,'departemen_id');
-    }
-        public function getStokAttribute(): int
-    {
-        $masuk = $this->mutasi()
-            ->whereIn('jenis', MutasiBarang::JENIS_MASUK)
-            ->sum('jumlah');
-
-        $keluar = $this->mutasi()
-            ->whereIn('jenis', MutasiBarang::JENIS_KELUAR)
-            ->sum('jumlah');
-
-        return (int) ($masuk - $keluar);
     }
 
     public function isStokRendah(): bool

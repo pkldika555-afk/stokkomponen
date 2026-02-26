@@ -81,7 +81,7 @@
                             <select id="jenis" name="jenis"
                                 class="w-full bg-gray-800 border {{ $errors->has('jenis') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
                                 <option value="">— Pilih Jenis —</option>
-                                <option value="pembelian" {{ old('jenis') == 'pembelian' ? 'selected' : '' }}>📥 Pembelian
+                                <option value="pengambilan" {{ old('jenis') == 'pengambilan' ? 'selected' : '' }}>📥 Pengambilan
                                 </option>
                                 <option value="internal" {{ old('jenis') == 'internal' ? 'selected' : '' }}>📤 Pemakaian
                                     Internal</option>

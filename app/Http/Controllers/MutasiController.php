@@ -57,7 +57,7 @@ class MutasiController extends Controller
             'jumlah' => 'required|integer|min:1',
             'id_departemen_asal' => 'required|exists:departemen,id',
             'id_departemen_tujuan' => 'required|exists:departemen,id',
-            'jenis' => 'required|in:pembelian,internal,retur,repair_kembali',
+            'jenis' => 'required|in:pengambilan,internal,retur,repair_kembali',
             'keterangan' => 'nullable|string|max:500',
         ]);
         

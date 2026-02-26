@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->integer('jumlah');
             $table->foreignId('id_departemen_asal')->constrained('departemen');
             $table->foreignId('id_departemen_tujuan')->constrained('departemen');
-            $table->enum('jenis', ['pembelian', 'internal', 'retur', 'repair_kembali'])->default('internal');
+            $table->enum('jenis', ['pengambilan', 'internal', 'retur', 'repair_kembali'])->default('internal');
             $table->text('keterangan')->nullable();
             $table->timestamps();
         });

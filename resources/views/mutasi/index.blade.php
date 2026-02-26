@@ -62,7 +62,7 @@
                         <select name="jenis"
                             class="w-full bg-gray-800 border border-gray-700 text-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500">
                             <option value="">Semua Jenis</option>
-                            <option value="pembelian" {{ request('jenis') == 'pembelian' ? 'selected' : '' }}>Pembelian
+                            <option value="pengambilan" {{ request('jenis') == 'pengambilan' ? 'selected' : '' }}>Pengambilan
                             </option>
                             <option value="internal" {{ request('jenis') == 'internal' ? 'selected' : '' }}>Pemakaian Internal
                             </option>
@@ -109,6 +109,8 @@
                                 Dari → Ke</th>
                             <th class="text-right px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                                 Jumlah</th>
+                            <th class="text-right px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                Stok Sekarang</th>
                             <th class="text-center px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                                 Aksi</th>
                         </tr>
@@ -118,7 +120,7 @@
                             @php
                                 $isMasuk = in_array($m->jenis, \App\Models\MasterKomponen::JENIS_MASUK);
                                 $jenisColor = match ($m->jenis) {
-                                    'pembelian' => 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
+                                    'pengambilan' => 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
                                     'internal' => 'text-amber-400 bg-amber-500/10 border-amber-500/20',
                                     'retur' => 'text-sky-400 bg-sky-500/10 border-sky-500/20',
                                     'repair_kembali' => 'text-violet-400 bg-violet-500/10 border-violet-500/20',
@@ -151,6 +153,12 @@
                                         {{ $isMasuk ? '+' : '-' }}{{ number_format($m->jumlah) }}
                                     </span>
                                     <p class="text-xs text-gray-600">{{ $m->komponen->satuan ?? 'unit' }}</p>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <span
+                                        class="font-mono font-semibold {{ ($k->stok ?? 0) > 0 ? 'text-emerald-400' : 'text-rose-400' }}">
+                                        {{ number_format($k->stok ?? 0) }}
+                                    </span>
                                 </td>
                                 <td class="px-5 py-3.5 text-center">
                                     <a href="{{ route('mutasi.show', $m->id) }}"
