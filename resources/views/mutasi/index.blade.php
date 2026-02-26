@@ -16,7 +16,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2     2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                         </svg>
                         Rekap Stok
                     </a>
@@ -47,8 +47,8 @@
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <div>
                         <label class="block text-xs text-gray-500 mb-1">Komponen</label>
-                        <select name="id_komponen"
-                            class="w-full bg-gray-800 border border-gray-700 text-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                        <select name="id_komponen" id="filter-komponen"
+                            class="select2 w-full bg-gray-800 border border-gray-700 text-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500">
                             <option value="">Semua Komponen</option>
                             @foreach($komponen as $k)
                                 <option value="{{ $k->id }}" {{ request('id_komponen') == $k->id ? 'selected' : '' }}>
@@ -207,4 +207,15 @@
 
         </div>
     </div>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            $('select#filter-komponen').select2({
+                width: '100%',
+                placeholder: 'Semua Komponen',
+                allowClear: true,
+                theme: 'classic'
+            });
+        });
+    </script>
 @endsection
