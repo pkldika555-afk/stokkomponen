@@ -103,7 +103,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/>
                                     </svg>
                                     <p class="text-gray-500 text-sm">Belum ada data departemen</p>
-                                    <a href="" class="text-indigo-400 hover:text-indigo-300 text-xs underline underline-offset-2">Tambah sekarang</a>
+                                    <a href="{{ route('departemen.create') }}" class="text-indigo-400 hover:text-indigo-300 text-xs underline underline-offset-2">Tambah sekarang</a>
                                 </div>
                             </td>
                         </tr>

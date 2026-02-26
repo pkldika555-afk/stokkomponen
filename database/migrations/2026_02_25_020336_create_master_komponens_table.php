@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('lokasi');
             $table->integer('stok_minimal')->default(0);
             $table->timestamps();
-            $table->foreignId('departemen_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('departemen_id')->constrained('departemen')->cascadeOnDelete();
         });
     }
 

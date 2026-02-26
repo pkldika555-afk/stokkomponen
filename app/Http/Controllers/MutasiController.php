@@ -70,4 +70,9 @@ class MutasiController extends Controller
         MutasiBarang::create($validate);
         return redirect()->route('mutasi.index')->with('success', 'Mutasi berhasil ditambahkan');
     }
+    public function show($id)
+    {
+        $komponen = MutasiBarang::with('komponen', 'departemenAsal', 'departemenTujuan')->findOrFail($id);
+        return view('mutasi.show', compact('komponen'));
+    }
 }
