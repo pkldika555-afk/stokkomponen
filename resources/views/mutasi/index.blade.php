@@ -136,7 +136,7 @@
                                 <p class="text-xs text-gray-600">{{ $m->komponen->satuan ?? 'unit' }}</p>
                             </td>
                             <td class="px-5 py-3.5 text-center">
-                                <a href="{{ route('mutasi.show', $m->id_mutasi) }}"
+                                <a href="{{ route('mutasi.show', $m->id) }}"
                                     class="inline-flex items-center gap-1 text-xs text-indigo-400 hover:text-indigo-300 transition-colors">
                                     Detail
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

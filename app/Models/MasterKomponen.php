@@ -17,7 +17,7 @@ class MasterKomponen extends Model
         'stok_minimal',
         'rak',
         'lokasi',
-        'id_departemen'
+        'departemen_id'
     ];
     const JENIS_MASUK = ['pembelian', 'retur', 'repair_kembali' ];
     const JENIS_KELUAR = ['internal'];
@@ -27,7 +27,7 @@ class MasterKomponen extends Model
     }
     public function departemen()
     {
-        return $this->belongsTo(Departemen::class,'id_departemen');
+        return $this->belongsTo(Departemen::class,'departemen_id');
     }
         public function getStokAttribute(): int
     {

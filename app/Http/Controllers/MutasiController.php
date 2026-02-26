@@ -60,19 +60,22 @@ class MutasiController extends Controller
             'jenis' => 'required|in:pembelian,internal,retur,repair_kembali',
             'keterangan' => 'nullable|string|max:500',
         ]);
-
+        
+        $komponen = MasterKomponen::findOrFail($validate['id_komponen']);
         if (in_array($validate['jenis'], MutasiBarang::JENIS_KELUAR)) {
-            $komponen = MasterKomponen::findOrFail($validate['id_komponen']);
             if ($komponen->stok < $validate['jumlah']) {
                 return back()->withInput()->withErrors(['jumlah' => "Stok tidak cukup. Stok tersedia: {$komponen->stok} {$komponen->satuan}"]);
             }
         }
+        $komponen->update([
+            'id_departemen' => $validate['id_departemen_tujuan']
+        ]); 
         MutasiBarang::create($validate);
         return redirect()->route('mutasi.index')->with('success', 'Mutasi berhasil ditambahkan');
     }
     public function show($id)
     {
-        $komponen = MutasiBarang::with('komponen', 'departemenAsal', 'departemenTujuan')->findOrFail($id);
-        return view('mutasi.show', compact('komponen'));
+        $mutasi = MutasiBarang::with('komponen', 'departemenAsal', 'departemenTujuan')->findOrFail($id);
+        return view('mutasi.show', compact('mutasi'));
     }
 }

@@ -159,17 +159,17 @@
                     </div>
 
                     <div>
-                        <label for="id_departemen" class="block text-sm font-medium text-gray-300 mb-1.5">Bagian
+                        <label for="departemen_id" class="block text-sm font-medium text-gray-300 mb-1.5">Bagian
                             <span class="text-rose-400">*</span></label>
-                        <select id="id_departemen" name="id_departemen"
-                            class="w-full bg-gray-800 border {{ $errors->has('id_departemen') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+                        <select id="departemen_id" name="departemen_id"
+                            class="w-full bg-gray-800 border {{ $errors->has('departemen_id') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
                             <option value="">— Pilih Bagian —</option>
                             @foreach($departemen as $d)
-                                <option value="{{ $d->id }}" {{ $d->id == $d->id_departemen ? 'selected' : '' }}>
+                                <option value="{{ $d->id }}" {{ $d->id == $d->departemen_id ? 'selected' : '' }}>
                                     {{ $d->nama_departemen }}
                             @endforeach
                         </select>
-                        @error('id_departemen')
+                        @error('departemen_id')
                             <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p>
                         @enderror
                     </div>

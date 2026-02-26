@@ -29,7 +29,7 @@ class MasterController extends Controller
             'stok_minimal' => 'required',
             'rak' => 'required',
             'lokasi' => 'required',
-            'id_departemen' => 'required',
+            'departemen_id' => 'required',
         ]);
         MasterKomponen::create($validate);
         return redirect()->route('komponen.index')->with('success', 'Data berhasil ditambahkan');
