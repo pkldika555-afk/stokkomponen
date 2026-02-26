@@ -67,9 +67,9 @@ class MutasiController extends Controller
                 return back()->withInput()->withErrors(['jumlah' => "Stok tidak cukup. Stok tersedia: {$komponen->stok} {$komponen->satuan}"]);
             }
         }
-        $komponen->update([
-            'id_departemen' => $validate['id_departemen_tujuan']
-        ]); 
+        // $komponen->update([
+        //     'departemen_id' => $validate['id_departemen_tujuan']
+        // ]); 
         MutasiBarang::create($validate);
         return redirect()->route('mutasi.index')->with('success', 'Mutasi berhasil ditambahkan');
     }
