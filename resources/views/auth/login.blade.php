@@ -9,8 +9,8 @@
     <form method="POST" action="/login">
         @csrf
         <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <label for="nrp">NRP:</label>
+            <input type="text" id="nrp" name="nrp" required>
         </div>
         <div>
             <label for="password">Password:</label>

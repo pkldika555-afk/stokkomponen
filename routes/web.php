@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MasterController;
@@ -21,8 +22,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('komponen', MasterController::class);   
-Route::resource('departemen', DepartemenController::class);   
+Route::resource('komponen', MasterController::class)->middleware('auth');   
+Route::resource('departemen', DepartemenController::class)->middleware('auth');   
 
 Route::get('/laporan/transaksi', [LaporanController::class, 'index'])->name('laporan.transaksi');
 
@@ -32,4 +33,7 @@ Route::prefix('mutasi')->name('mutasi.')->group(function () {
     Route::post('/',       [MutasiController::class, 'store'])  ->name('store');
     Route::get('/rekap',   [MutasiController::class, 'rekap'])  ->name('rekap');
     Route::get('/{id}',    [MutasiController::class, 'show'])   ->name('show');
-});
+})->middleware('auth');
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

@@ -86,8 +86,8 @@
                         <i class="ri-user-fill text-slate-300 text-sm"></i>
                     </div>
                     <div class="min-w-0 flex-1">
-                        <p class="text-sm font-medium text-slate-200 truncate">Administrator</p>
-                        <p class="text-xs text-slate-500 truncate">admin@system.local</p>
+                        <p class="text-sm font-medium text-slate-200 truncate">{{ auth()->user()->name }}</p>
+                        <p class="text-xs text-slate-500 truncate">NRP : {{ auth()->user()->nrp }}</p>
                     </div>
                     <span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0 shadow-sm shadow-emerald-400/50"></span>
                 </div>

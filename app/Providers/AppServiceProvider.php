@@ -19,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        \Illuminate\Support\Facades\Validator::extend('nrp', function ($attribute, $value, $parameters, $validator) {
+            // Contoh validasi: hanya angka, panjang 6
+            return preg_match('/^[0-9]{6}$/', $value);
+        }, 'NRP harus terdiri dari 6 digit angka.');
     }
 }
