@@ -55,6 +55,7 @@
                             <th class="text-left px-6 py-3 font-semibold">Tipe</th>
                             <th class="text-left px-6 py-3 font-semibold">Satuan</th>
                             <th class="text-right px-6 py-3 font-semibold">Stok Minimal</th>
+                            <th class="text-right px-6 py-3 font-semibold">Stok Sekarang</th>
                             <th class="text-right px-6 py-3 font-semibold">Rak</th>
                             <th class="text-right px-6 py-3 font-semibold">Lot</th>
                             <th class="text-center px-6 py-3 font-semibold">Bagian</th>
@@ -100,6 +101,11 @@
                             <td class="px-6 py-4 text-right">
                                 <span class="font-mono font-semibold {{ ($k->stok_minimal ?? 0) > 0 ? 'text-emerald-400' : 'text-rose-400' }}">
                                     {{ number_format($k->stok_minimal ?? 0) }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <span class="font-mono font-semibold {{ ($k->stok ?? 0) > 0 ? 'text-emerald-400' : 'text-rose-400' }}">
+                                    {{ number_format($k->stok ?? 0) }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-gray-400">{{ $k->rak ?? '-' }}</td>

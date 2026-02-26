@@ -174,7 +174,7 @@
                         </div>
                         <p class="mt-1.5 text-xs text-gray-600">
                             Untuk mengubah stok, gunakan fitur
-                            <a href="" class="text-indigo-400 hover:text-indigo-300 underline underline-offset-2">Mutasi
+                            <a href="{{ route('mutasi.create') }}" class="text-indigo-400 hover:text-indigo-300 underline underline-offset-2">Mutasi
                                 Barang</a>
                         </p>
                     </div>
