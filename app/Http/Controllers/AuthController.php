@@ -14,7 +14,7 @@ class AuthController extends Controller
         ]);
         if (auth()->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended(route('departemen.index'));
+            return redirect()->intended(route('dashboard'));
         }
         return back()->with('error','Error password atau nrp salah');
     }   
@@ -28,5 +28,9 @@ class AuthController extends Controller
     public function index()
     {
         return view('auth.login');
+    }
+    public function dashboard()
+    {
+        return view('dashboard');
     }
 }
