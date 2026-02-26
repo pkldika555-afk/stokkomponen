@@ -33,5 +33,19 @@ class MutasiBarang extends Model
     {
         return $this->belongsTo(Departemen::class, 'id_departemen_tujuan');
     }
+    public function isMasuk()
+    {
+        return in_array($this->jenis, self::JENIS_MASUK);
+    }
+    public function getLabelJenisAttribute()
+    {
+        return match($this->jenis) {
+            'pembelian' => 'Pembelian',
+            'internal' => 'Pemakaian Internal',
+            'retur' => 'retur',
+            'repair_kembali' => 'Repair Kembali',
+            default => $this->jenis,
+        };
+    }
 
 }
