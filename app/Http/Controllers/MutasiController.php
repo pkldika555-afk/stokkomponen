@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departemen;
 use App\Models\MasterKomponen;
 use App\Models\MutasiBarang;
 use Illuminate\Http\Request;
@@ -31,5 +32,24 @@ class MutasiController extends Controller
         $mutasi = $query->paginate(15);
         $komponen = MasterKomponen::orderBy('nama_komponen')->get();
         return view("mutasi.index", compact("komponen", "mutasi"));
+    }
+    public function create()
+    {
+        $komponen = MasterKomponen::all();
+        $departemen = Departemen::all();
+        return view('mutasi.create', compact('komponen', 'departemen'));
+    }
+    public function store(Request $request)
+    {
+        $validate = $request->validate([
+            'id_komponen' => 'required',
+            'tanggal' => 'required',
+            'jumlah' => 'required',
+            'id_departemen_asal' => 'required',
+            'id_departemen_tujuan' => 'required',
+            'jenis' => 'required',
+        ]);
+        MutasiBarang::create($validate);
+        return redirect()->route('mutasi.index')->with('success', 'Mutasi berhasil ditambahkan');
     }
 }
