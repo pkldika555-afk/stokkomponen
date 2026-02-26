@@ -52,8 +52,7 @@
                             Komponen <span class="text-rose-400">*</span>
                         </label>
                         <select id="id_komponen" name="id_komponen"
-                            class="w-full bg-gray-800 border {{ $errors->has('id_komponen') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
-                            onchange="updateStokInfo(this)">
+                            class="w-full bg-gray-800 border {{ $errors->has('id_komponen') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
                             <option value="">— Pilih Komponen —</option>
                             @foreach($komponen as $k)
                                 <option value="{{ $k->id }}" data-stok="{{ $k->stok }}" data-satuan="{{ $k->satuan }}"
@@ -210,23 +209,38 @@
             panel.classList.remove('hidden');
         }
 
+        const JENIS_MASUK = ['pengambilan', 'pembelian', 'retur', 'repair_kembali'];
+        const JENIS_KELUAR = ['internal'];
+
         document.addEventListener('DOMContentLoaded', function () {
             const sel = document.getElementById('id_komponen');
             if (sel.value) {
                 updateStokInfo(sel);
-                updateTujuan(sel);
             }
+            updateLocked();
         });
 
-        function updateTujuan(select) {
-            const opt = select.options[select.selectedIndex];
+        function updateLocked() {
+            const komponenSel = document.getElementById('id_komponen');
+            const jenisSel = document.getElementById('jenis');
+            const asalSel = document.getElementById('id_departemen_asal');
             const tujuanSel = document.getElementById('id_departemen_tujuan');
-            const deptId = opt.dataset.departemen;
 
-            const existingHidden = document.getElementById('id_departemen_tujuan_hidden');
-            if (existingHidden) existingHidden.remove();
+            const komponenOpt = komponenSel.options[komponenSel.selectedIndex];
+            const deptId = komponenOpt.dataset.departemen;
+            const jenis = jenisSel.value;
 
-            if (deptId) {
+            document.getElementById('id_departemen_asal_hidden')?.remove();
+            document.getElementById('id_departemen_tujuan_hidden')?.remove();
+
+            asalSel.removeAttribute('disabled');
+            tujuanSel.removeAttribute('disabled');
+
+            if (!deptId || !jenis) {
+                return; 
+            }
+
+            if (JENIS_MASUK.includes(jenis)) {
                 tujuanSel.value = deptId;
                 tujuanSel.setAttribute('disabled', 'disabled');
                 const hid = document.createElement('input');
@@ -235,14 +249,27 @@
                 hid.id = 'id_departemen_tujuan_hidden';
                 hid.value = deptId;
                 tujuanSel.after(hid);
-            } else {
-                tujuanSel.removeAttribute('disabled');
+            }
+
+            else if (JENIS_KELUAR.includes(jenis)) {
+                asalSel.value = deptId;
+                asalSel.setAttribute('disabled', 'disabled');
+                const hid = document.createElement('input');
+                hid.type = 'hidden';
+                hid.name = 'id_departemen_asal';
+                hid.id = 'id_departemen_asal_hidden';
+                hid.value = deptId;
+                asalSel.after(hid);
             }
         }
 
         document.getElementById('id_komponen').addEventListener('change', function (e) {
             updateStokInfo(this);
-            updateTujuan(this);
+            updateLocked();
+        });
+
+        document.getElementById('jenis').addEventListener('change', function (e) {
+            updateLocked();
         });
     </script>
 @endsection
