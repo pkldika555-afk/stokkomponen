@@ -213,8 +213,7 @@
                     </div>
                     <div>
                         <label class="block text-xs text-gray-500 mb-1">Jenis</label>
-                        <select name="jenis"
-                            class="w-full bg-gray-800 border border-gray-700 text-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                        <select name="jenis" id="filter-jenis">
                             <option value="">Semua Jenis</option>
                             <option value="masuk" {{ request('jenis') == 'masuk' ? 'selected' : '' }}>Masuk</option>
                             <option value="keluar" {{ request('jenis') == 'keluar' ? 'selected' : '' }}>Keluar</option>
@@ -348,7 +347,14 @@
                 placeholder: "Semua Komponen",
                 allowClear: true,
                 width: 'resolve',
-                dropdownParent: $('form')  // supaya dropdown muncul di dalam form
+                dropdownParent: $('form')  
+            });
+
+            $('#filter-jenis').select2({
+                placeholder: "Semua Jenis",
+                allowClear: true,
+                width: 'resolve',
+                dropdownParent: $('form')  
             });
         });
     </script>
