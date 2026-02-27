@@ -32,16 +32,36 @@
             @endif
 
             <form method="GET" class="mb-5">
-                <div class="relative">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
-                    </svg>
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari departemen..."
-                        class="w-full bg-gray-900 border border-gray-800 text-gray-100 rounded-xl pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition placeholder-gray-600">
+                <div class="flex items-center gap-2">
+                    <div class="relative flex-1">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500 pointer-events-none z-10"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
+                        </svg>
+                        <select name="id_departemen" id="filter-departemen"
+                            class="w-full bg-gray-800 border border-gray-700 text-gray-300 rounded-lg pl-9 pr-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition appearance-none">
+                            <option value="">Semua Departemen</option>
+                            @foreach($departemen as $d)
+                                <option value="{{ $d->id }}" {{ request('id_departemen') == $d->id ? 'selected' : '' }}>
+                                    {{ $d->nama_departemen }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!-- <button type="submit"
+                                class="shrink-0 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg px-3 py-2 text-xs font-medium transition-colors">
+                                Filter
+                            </button> -->
                 </div>
+                @if(request()->hasAny(['id_departemen']))
+                    <div class="mt-2 text-right">
+                        <a href="{{ route('departemen.index') }}"
+                            class="text-xs text-gray-500 hover:text-gray-300 underline">Reset
+                            filter</a>
+                    </div>
+                @endif
             </form>
 
 
@@ -141,5 +161,19 @@
 
         </div>
     </div>
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/select2.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#filter-departemen').select2({
+                placeholder: "Cari Departemen...",
+                allowClear: true,
+                width: 'resolve',
+                dropdownParent: $('form')
+            });
+            $('#filter-departemen').on('change', function () {
+                $(this).closest('form').submit();
+            });
+        });
+    </script>
 @endsection

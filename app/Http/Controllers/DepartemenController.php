@@ -9,7 +9,11 @@ class DepartemenController extends Controller
 {
     public function index()
     {
-        $departemen = departemen::paginate(10);
+        $query = Departemen::orderBy('nama_departemen', 'asc');
+        $query->when(request('id_departemen'), function ($q) {
+            $q->where('id', request('id_komponen'));
+        });
+        $departemen = $query->paginate(10);
         return view('departemen.index', compact('departemen'));
     }
     public function create()
@@ -19,10 +23,10 @@ class DepartemenController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            'nama_departemen'=> 'required',
+            'nama_departemen' => 'required',
         ]);
         $departemen = departemen::create($validate);
-        return redirect()->route(route: 'departemen.index')->with('success','Data berhasil ditambahkan');
+        return redirect()->route(route: 'departemen.index')->with('success', 'Data berhasil ditambahkan');
     }
     public function edit($id)
     {
@@ -36,12 +40,12 @@ class DepartemenController extends Controller
         ]);
         $departemen = departemen::findOrFail($id);
         $departemen->update($validate);
-        return redirect()->route(route:'departemen.index')->with('success','Data berhasil diperbarui');
+        return redirect()->route(route: 'departemen.index')->with('success', 'Data berhasil diperbarui');
     }
     public function destroy($id)
     {
         $departemen = departemen::findOrFail($id);
         $departemen->delete();
-        return redirect()->route(route:'departemen.index')->with('success','Data berhasil dihapus');
+        return redirect()->route(route: 'departemen.index')->with('success', 'Data berhasil dihapus');
     }
 }
