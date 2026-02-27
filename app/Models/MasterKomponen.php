@@ -20,8 +20,9 @@ class MasterKomponen extends Model
         'lokasi',
         'departemen_id'
     ];
-    const JENIS_MASUK = ['pembelian', 'retur', 'repair_kembali' ];
-    const JENIS_KELUAR = ['internal'];
+    // hanya dua tipe sekarang, untuk konsistensi dengan tabel mutasi
+    const JENIS_MASUK = ['masuk'];
+    const JENIS_KELUAR = ['keluar'];
     public function mutasi()
     {
         return $this->hasMany(MutasiBarang::class, 'id_komponen');

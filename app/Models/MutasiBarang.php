@@ -17,10 +17,9 @@ class MutasiBarang extends Model
         'jenis',
         'keterangan'
     ];
-    // Jenis yang menambah stok
-    const JENIS_MASUK = ['pengambilan', 'retur', 'repair_kembali'];
-    // Jenis yang mengurangi stok
-    const JENIS_KELUAR = ['internal'];
+    // simplified types: "masuk" akan menambah stok, "keluar" akan mengurangi
+    const JENIS_MASUK = ['masuk'];
+    const JENIS_KELUAR = ['keluar'];
     public function komponen()
     {
         return $this->belongsTo(MasterKomponen::class, 'id_komponen');
@@ -37,17 +36,13 @@ class MutasiBarang extends Model
     }
     public function isMasuk()
     {
-        return in_array($this->jenis, self::JENIS_MASUK);
+        // hanya "masuk" yang dianggap sebagai mutasi masuk
+        return $this->jenis === 'masuk';
     }
     public function getLabelJenisAttribute()
     {
-        return match($this->jenis) {
-            'pengambilan' => 'Pengambilan',
-            'internal' => 'Pemakaian Internal',
-            'retur' => 'retur',
-            'repair_kembali' => 'Repair Kembali',
-            default => $this->jenis,
-        };
+        // label sederhana berdasarkan nilai, kapitalisasi awal
+        return ucfirst($this->jenis);
     }
 
 }

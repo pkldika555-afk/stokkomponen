@@ -62,15 +62,8 @@
                         <select name="jenis"
                             class="w-full bg-gray-800 border border-gray-700 text-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500">
                             <option value="">Semua Jenis</option>
-                            <option value="pengambilan" {{ request('jenis') == 'pengambilan' ? 'selected' : '' }}>Pengambilan
-                            </option>
-                            <option value="pembelian" {{ request('jenis') == 'pembelian' ? 'selected' : '' }}>Pembelian
-                            </option>
-                            <option value="internal" {{ request('jenis') == 'internal' ? 'selected' : '' }}>Pemakaian Internal
-                            </option>
-                            <option value="retur" {{ request('jenis') == 'retur' ? 'selected' : '' }}>Retur</option>
-                            <option value="repair_kembali" {{ request('jenis') == 'repair_kembali' ? 'selected' : '' }}>Repair
-                                Kembali</option>
+                            <option value="masuk" {{ request('jenis') == 'masuk' ? 'selected' : '' }}>Masuk</option>
+                        <option value="keluar" {{ request('jenis') == 'keluar' ? 'selected' : '' }}>Keluar</option>
                         </select>
                     </div>
                     <div>
@@ -123,13 +116,10 @@
                         @forelse($mutasi as $m)
                             @php
                                 // determine sign using MutasiBarang constants
-                                $isMasuk = in_array($m->jenis, \App\Models\MutasiBarang::JENIS_MASUK);
-                                $jenisColor = match ($m->jenis) {
-                                    'pengambilan' => 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20', 'pembelian' => 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20', 'internal' => 'text-amber-400 bg-amber-500/10 border-amber-500/20',
-                                    'retur' => 'text-sky-400 bg-sky-500/10 border-sky-500/20',
-                                    'repair_kembali' => 'text-violet-400 bg-violet-500/10 border-violet-500/20',
-                                    default => 'text-gray-400 bg-gray-800 border-gray-700',
-                                };
+                                $isMasuk = ($m->jenis === 'masuk');
+                                $jenisColor = $isMasuk
+                                    ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'
+                                    : 'text-rose-400 bg-rose-500/10 border-rose-500/20';
                             @endphp
                             <tr class="hover:bg-gray-800/30 transition-colors">
                                 <td class="px-5 py-3.5">

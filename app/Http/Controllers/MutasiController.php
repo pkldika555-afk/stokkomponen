@@ -57,15 +57,14 @@ class MutasiController extends Controller
             'jumlah' => 'required|integer|min:1',
             'id_departemen_asal' => 'required|exists:departemen,id',
             'id_departemen_tujuan' => 'required|exists:departemen,id',
-            'jenis' => 'required|in:pengambilan,internal,retur,repair_kembali',
+            'jenis' => 'required|in:masuk,keluar',
             'keterangan' => 'nullable|string|max:500',
         ]);
         
         $komponen = MasterKomponen::findOrFail($validate['id_komponen']);
-        if (in_array($validate['jenis'], MutasiBarang::JENIS_KELUAR)) {
-            if ($komponen->stok < $validate['jumlah']) {
-                return back()->withInput()->withErrors(['jumlah' => "Stok tidak cukup. Stok tersedia: {$komponen->stok} {$komponen->satuan}"]);
-            }
+        // hanya cek stok jika mutasi keluar
+        if ($validate['jenis'] === 'keluar' && $komponen->stok < $validate['jumlah']) {
+            return back()->withInput()->withErrors(['jumlah' => "Stok tidak cukup. Stok tersedia: {$komponen->stok} {$komponen->satuan}"]);
         }
         // $komponen->update([
         //     'departemen_id' => $validate['id_departemen_tujuan']

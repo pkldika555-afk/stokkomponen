@@ -23,7 +23,7 @@ class LaporanController extends Controller
         $totalKeluar = $transaksi->where('jenis', 'keluar')->sum('jumlah');
 
         $komponen = MasterKomponen::all();
-        return view('laporan.index', compact('transaksi', 'totalMasuk', 'totalMasuk', 'komponen'));
+        return view('laporan.index', compact('transaksi', 'totalMasuk', 'totalKeluar', 'komponen'));
     }
 }
 }

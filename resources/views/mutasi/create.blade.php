@@ -57,7 +57,7 @@
                             @foreach($komponen as $k)
                                 <option value="{{ $k->id }}" data-stok="{{ $k->stok }}" data-satuan="{{ $k->satuan }}"
                                     data-stok-minimal="{{ $k->stok_minimal }}" data-departemen="{{ $k->departemen_id }}"
-                                    data-rak="{{ $k->rak }}"
+                                    data-rak="{{ $k->rak }}" data-lokasi="{{ $k->lokasi }}"
                                     {{ old('id_komponen') == $k->id ? 'selected' : '' }}>
                                     {{ $k->nama_komponen }} ({{ $k->kode_komponen }})
                                 </option>
@@ -77,6 +77,11 @@
                             <span class="text-xs text-gray-500">Rak</span>
                             <span id="rak-value" class="text-sm font-mono font-semibold text-emerald-400"></span>
                         </div>
+                        <div id="lokasi-info"
+                            class="hidden mt-2 bg-gray-800/60 border border-gray-700/60 rounded-lg px-3.5 py-2.5 flex items-center justify-between">
+                            <span class="text-xs text-gray-500">Lot</span>
+                            <span id="lokasi-value" class="text-sm font-mono font-semibold text-emerald-400"></span>
+                        </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">
@@ -87,13 +92,8 @@
                             <select id="jenis" name="jenis"
                                 class="w-full bg-gray-800 border {{ $errors->has('jenis') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
                                 <option value="">— Pilih Jenis —</option>
-                                <option value="pengambilan" {{ old('jenis') == 'pengambilan' ? 'selected' : '' }}>📥 Pengambilan
-                                </option>
-                                <option value="internal" {{ old('jenis') == 'internal' ? 'selected' : '' }}>📤 Pemakaian
-                                    Internal</option>
-                                <option value="retur" {{ old('jenis') == 'retur' ? 'selected' : '' }}>↩️ Retur</option>
-                                <option value="repair_kembali" {{ old('jenis') == 'repair_kembali' ? 'selected' : '' }}>🔧
-                                    Repair Kembali</option>
+                                <option value="masuk" {{ old('jenis') == 'masuk' ? 'selected' : '' }}>📥 Masuk</option>
+                                <option value="keluar" {{ old('jenis') == 'keluar' ? 'selected' : '' }}>📤 Keluar</option>
                             </select>
                             @error('jenis')
                                 <p class="mt-1 text-xs text-rose-400">{{ $message }}</p>
@@ -230,9 +230,25 @@
 
             panel.classList.remove('hidden');
         }
+        function updateLokasiInfo(select) {
+            const opt = select.options[select.selectedIndex];
+            const panel = document.getElementById('lokasi-info');
+            const valEl = document.getElementById('lokasi-value');
 
-        const JENIS_MASUK = ['pengambilan', 'pembelian', 'retur', 'repair_kembali'];
-        const JENIS_KELUAR = ['internal'];
+            if (!opt.value) {
+                panel.classList.add('hidden');
+                return;
+            }
+
+            const lokasi = opt.dataset.lokasi || '-';
+
+            valEl.textContent = lokasi;
+
+            panel.classList.remove('hidden');
+        }
+
+        const JENIS_MASUK = ['masuk'];
+        const JENIS_KELUAR = ['keluar'];
 
         document.addEventListener('DOMContentLoaded', function () {
             const sel = document.getElementById('id_komponen');
@@ -241,6 +257,9 @@
             }
             if (sel.value) {
                 updateRakInfo(sel);
+            }
+            if (sel.value) {
+                updateLokasiInfo(sel);
             }
             updateLocked();
         });
@@ -262,10 +281,11 @@
             tujuanSel.removeAttribute('disabled');
 
             if (!deptId || !jenis) {
-                return; 
+                return;
             }
 
-            if (JENIS_MASUK.includes(jenis)) {
+            if (jenis === 'masuk') {
+                // tujuan selalu departemen asal komponen
                 tujuanSel.value = deptId;
                 tujuanSel.setAttribute('disabled', 'disabled');
                 const hid = document.createElement('input');
@@ -274,9 +294,8 @@
                 hid.id = 'id_departemen_tujuan_hidden';
                 hid.value = deptId;
                 tujuanSel.after(hid);
-            }
-
-            else if (JENIS_KELUAR.includes(jenis)) {
+            } else if (jenis === 'keluar') {
+                // asal selalu departemen komponen
                 asalSel.value = deptId;
                 asalSel.setAttribute('disabled', 'disabled');
                 const hid = document.createElement('input');
@@ -291,6 +310,7 @@
         document.getElementById('id_komponen').addEventListener('change', function (e) {
             updateStokInfo(this);
             updateRakInfo(this);
+            updateLokasiInfo(this);
             updateLocked();
         });
 

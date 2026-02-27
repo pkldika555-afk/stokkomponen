@@ -14,16 +14,14 @@ class MutasiBarangObserver
     {
         $komponen = $mutasi->komponen;
         
-        if ($mutasi->isMasuk()) {
-            // Jenis masuk: pengambilan, retur, repair_kembali - stok bertambah
+        if ($mutasi->jenis === 'masuk') {
+            // stok bertambah untuk mutasi masuk
             $komponen->increment('stok', $mutasi->jumlah);
         } else {
-            // Jenis keluar: internal - stok berkurang
-            // Cek stok untuk mencegah minus
+            // mutasi keluar mengurangi stok, pastikan tidak minus
             if ($komponen->stok >= $mutasi->jumlah) {
                 $komponen->decrement('stok', $mutasi->jumlah);
             } else {
-                // Jika stok tidak cukup, hapus mutasi dan throw error
                 $mutasi->delete();
                 throw new \Exception("Stok tidak cukup. Stok tersedia: {$komponen->stok}, diminta: {$mutasi->jumlah}");
             }
@@ -38,7 +36,7 @@ class MutasiBarangObserver
         $komponen = $mutasi->komponen;
         
         // Rollback stok
-        if ($mutasi->isMasuk()) {
+        if ($mutasi->jenis === 'masuk') {
             $komponen->decrement('stok', $mutasi->jumlah);
         } else {
             $komponen->increment('stok', $mutasi->jumlah);
@@ -53,7 +51,7 @@ class MutasiBarangObserver
         $komponen = $mutasi->komponen;
         
         // Restore stok
-        if ($mutasi->isMasuk()) {
+        if ($mutasi->jenis === 'masuk') {
             $komponen->increment('stok', $mutasi->jumlah);
         } else {
             $komponen->decrement('stok', $mutasi->jumlah);

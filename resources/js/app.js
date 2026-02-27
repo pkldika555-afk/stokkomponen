@@ -1,4 +1,3 @@
-import './bootstrap';
-import $ from 'jquery';
-window.jQuery = window.$ = $;
-require('select2');
+// resources/js/app.js
+import 'select2';
+import 'select2/dist/css/select2.min.css';
