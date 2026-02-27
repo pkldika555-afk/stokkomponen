@@ -1,7 +1,6 @@
 @import "tailwindcss";  
 @import "select2/dist/css/select2.min.css";
-@import "select2.css";
-@import "remixicon.css";
+
 
 /* latin-ext */
 @font-face {

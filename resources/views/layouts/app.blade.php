@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Manajemen Komponen</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css" rel="stylesheet">
-    <!-- <link
-        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
-        rel="stylesheet"> -->
+ 
+    <link rel="stylesheet" href="{{ asset('assets/css/remixicon.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/font.css') }}">
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
