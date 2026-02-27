@@ -1,6 +1,169 @@
 @extends('layouts.app')
 
 @section('content')
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .select2-container--default .select2-selection--single {
+            background-color: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 0.5rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        .select2-container--default .select2-selection--single:hover {
+            border-color: #4b5563;
+        }
+
+        .select2-container--default.select2-container--open .select2-selection--single,
+        .select2-container--default.select2-container--focus .select2-selection--single {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 1px #6366f1;
+            outline: none;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #d1d5db;
+            font-size: 0.75rem;
+            line-height: 1rem;
+            padding-left: 0.75rem;
+            padding-right: 2rem;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__placeholder {
+            color: #6b7280;
+            font-size: 0.75rem;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 100%;
+            right: 0.5rem;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow b {
+            border-color: #6b7280 transparent transparent transparent;
+            border-width: 4px 4px 0 4px;
+        }
+
+        .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+            border-color: transparent transparent #6366f1 transparent;
+            border-width: 0 4px 4px 4px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__clear {
+            color: #6b7280;
+            font-size: 1rem;
+            margin-right: 0.25rem;
+            cursor: pointer;
+            transition: color 0.15s;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__clear:hover {
+            color: #f87171;
+        }
+
+        .select2-dropdown {
+            background-color: #111827;
+            border: 1px solid #374151;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 4px 10px -2px rgba(0, 0, 0, 0.4);
+            margin-top: 2px;
+            overflow: hidden;
+        }
+
+        .select2-container--default .select2-search--dropdown {
+            padding: 0.5rem;
+            border-bottom: 1px solid #1f2937;
+        }
+
+        .select2-container--default .select2-search--dropdown .select2-search__field {
+            background-color: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 0.375rem;
+            color: #d1d5db;
+            font-size: 0.75rem;
+            padding: 0.375rem 0.625rem;
+            width: 100%;
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        .select2-container--default .select2-search--dropdown .select2-search__field:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 1px #6366f1;
+        }
+
+        .select2-container--default .select2-search--dropdown .select2-search__field::placeholder {
+            color: #6b7280;
+        }
+
+        .select2-results__options {
+            padding: 0.25rem;
+            max-height: 220px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #374151 transparent;
+        }
+
+        .select2-results__options::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .select2-results__options::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .select2-results__options::-webkit-scrollbar-thumb {
+            background-color: #374151;
+            border-radius: 4px;
+        }
+
+        .select2-container--default .select2-results__option {
+            color: #9ca3af;
+            font-size: 0.75rem;
+            padding: 0.375rem 0.625rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.1s, color 0.1s;
+        }
+
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: #312e81;
+            color: #a5b4fc;
+        }
+
+        .select2-container--default .select2-results__option[aria-selected=true] {
+            background-color: #1e1b4b;
+            color: #818cf8;
+        }
+
+        .select2-container--default .select2-results__option[aria-selected=true]::before {
+            content: "✓ ";
+            font-size: 0.65rem;
+        }
+
+        .select2-results__message,
+        .select2-container--default .select2-results__option[aria-disabled=true] {
+            color: #6b7280;
+            font-size: 0.75rem;
+            padding: 0.5rem 0.625rem;
+            font-style: italic;
+        }
+
+        .select2-container--default .select2-results__group {
+            color: #6366f1;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.5rem 0.625rem 0.25rem;
+        }
+    </style>
     <div class="min-h-screen bg-gray-950 text-gray-100 font-sans">
         <div class="max-w-2xl mx-auto px-6 py-8">
 
@@ -51,14 +214,12 @@
                         <label for="id_komponen" class="block text-xs font-medium text-gray-400 mb-1.5">
                             Komponen <span class="text-rose-400">*</span>
                         </label>
-                        <select id="id_komponen" name="id_komponen"
-                            class="w-full bg-gray-800 border {{ $errors->has('id_komponen') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+                        <select id="id_komponen" name="id_komponen" class="filter-komponen">
                             <option value="">— Pilih Komponen —</option>
                             @foreach($komponen as $k)
                                 <option value="{{ $k->id }}" data-stok="{{ $k->stok }}" data-satuan="{{ $k->satuan }}"
                                     data-stok-minimal="{{ $k->stok_minimal }}" data-departemen="{{ $k->departemen_id }}"
-                                    data-rak="{{ $k->rak }}" data-lokasi="{{ $k->lokasi }}"
-                                    {{ old('id_komponen') == $k->id ? 'selected' : '' }}>
+                                    data-rak="{{ $k->rak }}" data-lokasi="{{ $k->lokasi }}" {{ old('id_komponen') == $k->id ? 'selected' : '' }}>
                                     {{ $k->nama_komponen }} ({{ $k->kode_komponen }})
                                 </option>
                             @endforeach
@@ -192,130 +353,107 @@
         </div>
     </div>
 
-    <script>
-        function updateStokInfo(select) {
-            const opt = select.options[select.selectedIndex];
-            const panel = document.getElementById('stok-info');
-            const valEl = document.getElementById('stok-value');
+<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/js/select2.min.js') }}"></script>
 
-            if (!opt.value) {
-                panel.classList.add('hidden');
-                return;
-            }
+<script>
+    function updateStokInfo(opt) {
+        const panel = document.getElementById('stok-info');
+        const valEl = document.getElementById('stok-value');
 
-            const stok = parseInt(opt.dataset.stok) || 0;
-            const stokMinimal = parseInt(opt.dataset.stokMinimal) || 0;
-            const satuan = opt.dataset.satuan || 'unit';
+        if (!opt || !opt.value) { panel.classList.add('hidden'); return; }
 
-            valEl.textContent = `${stok.toLocaleString('id-ID')} ${satuan}`;
-            valEl.className = stok <= stokMinimal
-                ? 'text-sm font-mono font-semibold text-rose-400'
-                : 'text-sm font-mono font-semibold text-emerald-400';
+        const stok       = parseInt(opt.dataset.stok) || 0;
+        const stokMinimal = parseInt(opt.dataset.stokMinimal) || 0;
+        const satuan     = opt.dataset.satuan || 'unit';
 
-            panel.classList.remove('hidden');
+        valEl.textContent = `${stok.toLocaleString('id-ID')} ${satuan}`;
+        valEl.className   = stok <= stokMinimal
+            ? 'text-sm font-mono font-semibold text-rose-400'
+            : 'text-sm font-mono font-semibold text-emerald-400';
+        panel.classList.remove('hidden');
+    }
+
+    function updateRakInfo(opt) {
+        const panel = document.getElementById('rak-info');
+        const valEl = document.getElementById('rak-value');
+
+        if (!opt || !opt.value) { panel.classList.add('hidden'); return; }
+        valEl.textContent = opt.dataset.rak || '-';
+        panel.classList.remove('hidden');
+    }
+
+    function updateLokasiInfo(opt) {
+        const panel = document.getElementById('lokasi-info');
+        const valEl = document.getElementById('lokasi-value');
+
+        if (!opt || !opt.value) { panel.classList.add('hidden'); return; }
+        valEl.textContent = opt.dataset.lokasi || '-';
+        panel.classList.remove('hidden');
+    }
+
+    function updateLocked() {
+        const komponenSel = document.getElementById('id_komponen');
+        const jenisSel    = document.getElementById('jenis');
+        const asalSel     = document.getElementById('id_departemen_asal');
+        const tujuanSel   = document.getElementById('id_departemen_tujuan');
+
+        const komponenOpt = komponenSel.options[komponenSel.selectedIndex];
+        const deptId      = komponenOpt?.dataset.departemen;
+        const jenis       = jenisSel.value;
+
+        document.getElementById('id_departemen_asal_hidden')?.remove();
+        document.getElementById('id_departemen_tujuan_hidden')?.remove();
+        asalSel.removeAttribute('disabled');
+        tujuanSel.removeAttribute('disabled');
+
+        if (!deptId || !jenis) return;
+
+        function lockWithHidden(selectEl, hiddenId, hiddenName, value) {
+            selectEl.value = value;
+            selectEl.setAttribute('disabled', 'disabled');
+            const hid   = document.createElement('input');
+            hid.type    = 'hidden';
+            hid.name    = hiddenName;
+            hid.id      = hiddenId;
+            hid.value   = value;
+            selectEl.after(hid);
         }
-        function updateRakInfo(select) {
-            const opt = select.options[select.selectedIndex];
-            const panel = document.getElementById('rak-info');
-            const valEl = document.getElementById('rak-value');
 
-            if (!opt.value) {
-                panel.classList.add('hidden');
-                return;
-            }
-
-            const rak = opt.dataset.rak || '-';
-
-            valEl.textContent = rak;
-
-            panel.classList.remove('hidden');
+        if (jenis === 'masuk') {
+            lockWithHidden(tujuanSel, 'id_departemen_tujuan_hidden', 'id_departemen_tujuan', deptId);
+        } else if (jenis === 'keluar') {
+            lockWithHidden(asalSel, 'id_departemen_asal_hidden', 'id_departemen_asal', deptId);
         }
-        function updateLokasiInfo(select) {
-            const opt = select.options[select.selectedIndex];
-            const panel = document.getElementById('lokasi-info');
-            const valEl = document.getElementById('lokasi-value');
+    }
 
-            if (!opt.value) {
-                panel.classList.add('hidden');
-                return;
-            }
+    $(document).ready(function () {
 
-            const lokasi = opt.dataset.lokasi || '-';
+        $('#id_komponen').select2({
+            placeholder: "Cari komponen...",
+            allowClear: true,
+            width: 'resolve',
+            dropdownParent: $('form')
+        });
 
-            valEl.textContent = lokasi;
+        const sel = document.getElementById('id_komponen');
+        const selectedOpt = sel.options[sel.selectedIndex];
+        updateStokInfo(selectedOpt);
+        updateRakInfo(selectedOpt);
+        updateLokasiInfo(selectedOpt);
+        updateLocked();
 
-            panel.classList.remove('hidden');
-        }
-
-        const JENIS_MASUK = ['masuk'];
-        const JENIS_KELUAR = ['keluar'];
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const sel = document.getElementById('id_komponen');
-            if (sel.value) {
-                updateStokInfo(sel);
-            }
-            if (sel.value) {
-                updateRakInfo(sel);
-            }
-            if (sel.value) {
-                updateLokasiInfo(sel);
-            }
+        $('#id_komponen').on('change', function () {
+            const opt = this.options[this.selectedIndex];
+            updateStokInfo(opt);
+            updateRakInfo(opt);
+            updateLokasiInfo(opt);
             updateLocked();
         });
 
-        function updateLocked() {
-            const komponenSel = document.getElementById('id_komponen');
-            const jenisSel = document.getElementById('jenis');
-            const asalSel = document.getElementById('id_departemen_asal');
-            const tujuanSel = document.getElementById('id_departemen_tujuan');
-
-            const komponenOpt = komponenSel.options[komponenSel.selectedIndex];
-            const deptId = komponenOpt.dataset.departemen;
-            const jenis = jenisSel.value;
-
-            document.getElementById('id_departemen_asal_hidden')?.remove();
-            document.getElementById('id_departemen_tujuan_hidden')?.remove();
-
-            asalSel.removeAttribute('disabled');
-            tujuanSel.removeAttribute('disabled');
-
-            if (!deptId || !jenis) {
-                return;
-            }
-
-            if (jenis === 'masuk') {
-                // tujuan selalu departemen asal komponen
-                tujuanSel.value = deptId;
-                tujuanSel.setAttribute('disabled', 'disabled');
-                const hid = document.createElement('input');
-                hid.type = 'hidden';
-                hid.name = 'id_departemen_tujuan';
-                hid.id = 'id_departemen_tujuan_hidden';
-                hid.value = deptId;
-                tujuanSel.after(hid);
-            } else if (jenis === 'keluar') {
-                // asal selalu departemen komponen
-                asalSel.value = deptId;
-                asalSel.setAttribute('disabled', 'disabled');
-                const hid = document.createElement('input');
-                hid.type = 'hidden';
-                hid.name = 'id_departemen_asal';
-                hid.id = 'id_departemen_asal_hidden';
-                hid.value = deptId;
-                asalSel.after(hid);
-            }
-        }
-
-        document.getElementById('id_komponen').addEventListener('change', function (e) {
-            updateStokInfo(this);
-            updateRakInfo(this);
-            updateLokasiInfo(this);
+        $('#jenis').on('change', function () {
             updateLocked();
         });
-
-        document.getElementById('jenis').addEventListener('change', function (e) {
-            updateLocked();
-        });
-    </script>
+    });
+</script>
 @endsection

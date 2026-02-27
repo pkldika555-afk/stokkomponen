@@ -11,7 +11,7 @@
         rel="stylesheet">
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/select2.css'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body {
             font-family: 'DM Sans', sans-serif;
