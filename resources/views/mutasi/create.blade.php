@@ -57,6 +57,7 @@
                             @foreach($komponen as $k)
                                 <option value="{{ $k->id }}" data-stok="{{ $k->stok }}" data-satuan="{{ $k->satuan }}"
                                     data-stok-minimal="{{ $k->stok_minimal }}" data-departemen="{{ $k->departemen_id }}"
+                                    data-rak="{{ $k->rak }}"
                                     {{ old('id_komponen') == $k->id ? 'selected' : '' }}>
                                     {{ $k->nama_komponen }} ({{ $k->kode_komponen }})
                                 </option>
@@ -70,6 +71,11 @@
                             class="hidden mt-2 bg-gray-800/60 border border-gray-700/60 rounded-lg px-3.5 py-2.5 flex items-center justify-between">
                             <span class="text-xs text-gray-500">Stok tersedia</span>
                             <span id="stok-value" class="text-sm font-mono font-semibold text-emerald-400"></span>
+                        </div>
+                        <div id="rak-info"
+                            class="hidden mt-2 bg-gray-800/60 border border-gray-700/60 rounded-lg px-3.5 py-2.5 flex items-center justify-between">
+                            <span class="text-xs text-gray-500">Rak</span>
+                            <span id="rak-value" class="text-sm font-mono font-semibold text-emerald-400"></span>
                         </div>
                     </div>
 
@@ -208,6 +214,22 @@
 
             panel.classList.remove('hidden');
         }
+        function updateRakInfo(select) {
+            const opt = select.options[select.selectedIndex];
+            const panel = document.getElementById('rak-info');
+            const valEl = document.getElementById('rak-value');
+
+            if (!opt.value) {
+                panel.classList.add('hidden');
+                return;
+            }
+
+            const rak = opt.dataset.rak || '-';
+
+            valEl.textContent = rak;
+
+            panel.classList.remove('hidden');
+        }
 
         const JENIS_MASUK = ['pengambilan', 'pembelian', 'retur', 'repair_kembali'];
         const JENIS_KELUAR = ['internal'];
@@ -216,6 +238,9 @@
             const sel = document.getElementById('id_komponen');
             if (sel.value) {
                 updateStokInfo(sel);
+            }
+            if (sel.value) {
+                updateRakInfo(sel);
             }
             updateLocked();
         });
@@ -265,6 +290,7 @@
 
         document.getElementById('id_komponen').addEventListener('change', function (e) {
             updateStokInfo(this);
+            updateRakInfo(this);
             updateLocked();
         });
 
