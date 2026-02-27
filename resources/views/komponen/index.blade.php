@@ -206,7 +206,7 @@
                         <select name="id_komponen" id="filter-komponen"
                             class="w-full bg-gray-800 border border-gray-700 text-gray-300 rounded-lg pl-9 pr-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition appearance-none">
                             <option value="">Semua Komponen</option>
-                            @foreach($komponen as $k)
+                            @foreach($allKomponen as $k)
                                 <option value="{{ $k->id }}" {{ request('id_komponen') == $k->id ? 'selected' : '' }}>
                                     {{ $k->nama_komponen }}
                                 </option>
@@ -214,9 +214,9 @@
                         </select>
                     </div>
                     <!-- <button type="submit"
-                        class="shrink-0 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg px-3 py-2 text-xs font-medium transition-colors">
-                        Filter
-                    </button> -->
+                            class="shrink-0 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg px-3 py-2 text-xs font-medium transition-colors">
+                            Filter
+                        </button> -->
                 </div>
                 @if(request()->hasAny(['id_komponen']))
                     <div class="mt-2 text-right">
@@ -285,8 +285,8 @@
                                         <div class="flex items-center gap-3">
                                             <!-- <div class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0"> -->
                                             <!-- <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                                                                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
-                                                                                                                </svg> -->
+                                                                                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
+                                                                                                                        </svg> -->
                                             <!-- </div> -->
                                             <span class="font-medium text-gray-100">{{ $k->tipe }}</span>
                                         </div>
