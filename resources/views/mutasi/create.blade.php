@@ -162,6 +162,23 @@
             text-transform: uppercase;
             letter-spacing: 0.1em;
             padding: 0.5rem 0.625rem 0.25rem;
+
+        }
+
+        .select2-container--default .select2-selection--single[aria-disabled="true"],
+        .select2-container--disabled .select2-selection--single {
+            background-color: #1f2937 !important;
+            border-color: #374151 !important;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .select2-container--disabled .select2-selection--single .select2-selection__rendered {
+            color: #6b7280 !important;
+        }
+
+        .select2-container--disabled .select2-selection--single .select2-selection__arrow b {
+            border-color: #4b5563 transparent transparent transparent !important;
         }
     </style>
     <div class="min-h-screen bg-gray-950 text-gray-100 font-sans">
@@ -171,7 +188,7 @@
                 <a href="{{ route('mutasi.index') }}"
                     class="inline-flex items-center gap-1.5 text-gray-500 hover:text-gray-300 text-xs transition-colors mb-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2"> 
+                        stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                     </svg>
                     Kembali ke History Mutasi
@@ -402,14 +419,17 @@
 
             document.getElementById('id_departemen_asal_hidden')?.remove();
             document.getElementById('id_departemen_tujuan_hidden')?.remove();
-            asalSel.removeAttribute('disabled');
-            tujuanSel.removeAttribute('disabled');
+            $(asalSel).prop('disabled', false);
+            $(tujuanSel).prop('disabled', false);
+
+            $('#id_departemen_asal').trigger('change');
+            $('#id_departemen_tujuan').trigger('change');
 
             if (!deptId || !jenis) return;
 
             function lockWithHidden(selectEl, hiddenId, hiddenName, value) {
                 selectEl.value = value;
-                selectEl.setAttribute('disabled', 'disabled');
+                $(selectEl).prop('disabled', true);
                 const hid = document.createElement('input');
                 hid.type = 'hidden';
                 hid.name = hiddenName;
@@ -420,8 +440,10 @@
 
             if (jenis === 'masuk') {
                 lockWithHidden(tujuanSel, 'id_departemen_tujuan_hidden', 'id_departemen_tujuan', deptId);
+                $('#id_departemen_tujuan').val(deptId).trigger('change');
             } else if (jenis === 'keluar') {
                 lockWithHidden(asalSel, 'id_departemen_asal_hidden', 'id_departemen_asal', deptId);
+                $('#id_departemen_asal').val(deptId).trigger('change');
             }
         }
 
