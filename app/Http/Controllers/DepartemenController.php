@@ -7,14 +7,16 @@ use Illuminate\Http\Request;
 
 class DepartemenController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $query = Departemen::orderBy('nama_departemen', 'asc');
-        $query->when(request('id_departemen'), function ($q) {
-            $q->where('id', request('id_komponen'));
-        });
-        $departemen = $query->paginate(10);
-        return view('departemen.index', compact('departemen'));
+    $departemen = Departemen::query()
+        ->orderBy('nama_departemen', 'asc')
+        ->when($request->id_departemen, fn($q) => $q->where('id', $request->id_departemen))
+        ->paginate(10);
+
+    $allDepartemen = Departemen::orderBy('nama_departemen', 'asc')->get(); 
+
+        return view('departemen.index', compact('departemen', 'allDepartemen'));
     }
     public function create()
     {

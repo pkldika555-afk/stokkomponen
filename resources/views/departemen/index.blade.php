@@ -206,9 +206,9 @@
                         <select name="id_departemen" id="filter-departemen"
                             class="w-full bg-gray-800 border border-gray-700 text-gray-300 rounded-lg pl-9 pr-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition appearance-none">
                             <option value="">Semua Departemen</option>
-                            @foreach($departemen as $d)
-                                <option value="{{ $d->id }}" {{ request('id_departemen') == $d->id ? 'selected' : '' }}>
-                                    {{ $d->nama_departemen }}
+                            @foreach($allDepartemen as $k)
+                                <option value="{{ $k->id }}" {{ request('id_departemen') == $k->id ? 'selected' : '' }}>
+                                    {{ $k->nama_departemen }}
                                 </option>
                             @endforeach
                         </select>
