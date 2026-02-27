@@ -103,8 +103,8 @@
                                         <div class="flex items-center gap-3">
                                             <!-- <div class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0"> -->
                                             <!-- <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
-                                                </svg> -->
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
+                                                        </svg> -->
                                             <!-- </div> -->
                                             <span class="font-medium text-gray-100">{{ $k->tipe }}</span>
                                         </div>
@@ -183,4 +183,5 @@
 
         </div>
     </div>
+    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
 @endsection

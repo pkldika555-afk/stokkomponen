@@ -9,7 +9,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
         rel="stylesheet">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/select2.css'])
     <style>
         body {
             font-family: 'DM Sans', sans-serif;
@@ -192,6 +194,7 @@
     <main id="main" class="min-h-screen pt-14 lg:pt-0 lg:pl-64 transition-all duration-300">
         <div class="p-6">
             @yield('content')
+   
         </div>
     </main>
     <script src="{{ asset('js/app.js') }}"></script>
