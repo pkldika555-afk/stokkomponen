@@ -60,7 +60,7 @@ class MutasiController extends Controller
             'jenis' => 'required|in:masuk,keluar',
             'keterangan' => 'nullable|string|max:500',
         ]);
-        
+
         $komponen = MasterKomponen::findOrFail($validate['id_komponen']);
         // hanya cek stok jika mutasi keluar
         if ($validate['jenis'] === 'keluar' && $komponen->stok < $validate['jumlah']) {
@@ -75,6 +75,33 @@ class MutasiController extends Controller
     public function show($id)
     {
         $mutasi = MutasiBarang::with('komponen', 'departemenAsal', 'departemenTujuan')->findOrFail($id);
+
         return view('mutasi.show', compact('mutasi'));
+    }
+    public function rekap(Request $request)
+    {
+        $komponen = MasterKomponen::with(['departemen'])
+            ->withCount('mutasi')
+            ->orderBy('nama_komponen')
+            ->get()
+            ->map(function ($k) {
+                $k->stok_sekarang = $k->stok;
+                return $k;
+            });
+            
+        $totalKomponen = $komponen->count();
+        $stokRendah = $komponen->filter(fn($k) => $k->isStokRendah())->count();
+        $totalMasuk = MutasiBarang::whereIn('jenis', MutasiBarang::JENIS_MASUK)
+            ->whereMonth('tanggal', now()->month)->sum('jumlah');
+        $totalKeluar = MutasiBarang::whereIn('jenis', MutasiBarang::JENIS_KELUAR)
+            ->whereMonth('tanggal', now()->month)->sum('jumlah');
+
+        return view('mutasi.rekap', compact(
+            'komponen',
+            'totalKomponen',
+            'stokRendah',
+            'totalMasuk',
+            'totalKeluar'
+        ));
     }
 }
