@@ -288,8 +288,7 @@
                             <label for="id_departemen_asal" class="block text-xs font-medium text-gray-400 mb-1.5">
                                 Dari (Asal) <span class="text-rose-400">*</span>
                             </label>
-                            <select id="id_departemen_asal" name="id_departemen_asal"
-                                class="w-full bg-gray-800 border {{ $errors->has('id_departemen_asal') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+                            <select id="id_departemen_asal" name="id_departemen_asal">
                                 <option value="">— Pilih —</option>
                                 @foreach($departemen as $d)
                                     <option value="{{ $d->id }}" {{ old('id_departemen_asal') == $d->id ? 'selected' : '' }}>
@@ -305,8 +304,7 @@
                             <label for="id_departemen_tujuan" class="block text-xs font-medium text-gray-400 mb-1.5">
                                 Ke (Tujuan) <span class="text-rose-400">*</span>
                             </label>
-                            <select id="id_departemen_tujuan" name="id_departemen_tujuan"
-                                class="w-full bg-gray-800 border {{ $errors->has('id_departemen_tujuan') ? 'border-rose-500' : 'border-gray-700' }} text-gray-100 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+                            <select id="id_departemen_tujuan" name="id_departemen_tujuan">
                                 <option value="">— Pilih —</option>
                                 @foreach($departemen as $d)
                                     <option value="{{ $d->id }}" {{ old('id_departemen_tujuan') == $d->id ? 'selected' : '' }}>
@@ -353,107 +351,118 @@
         </div>
     </div>
 
-<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-<script src="{{ asset('assets/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
 
-<script>
-    function updateStokInfo(opt) {
-        const panel = document.getElementById('stok-info');
-        const valEl = document.getElementById('stok-value');
+    <script>
+        function updateStokInfo(opt) {
+            const panel = document.getElementById('stok-info');
+            const valEl = document.getElementById('stok-value');
 
-        if (!opt || !opt.value) { panel.classList.add('hidden'); return; }
+            if (!opt || !opt.value) { panel.classList.add('hidden'); return; }
 
-        const stok       = parseInt(opt.dataset.stok) || 0;
-        const stokMinimal = parseInt(opt.dataset.stokMinimal) || 0;
-        const satuan     = opt.dataset.satuan || 'unit';
+            const stok = parseInt(opt.dataset.stok) || 0;
+            const stokMinimal = parseInt(opt.dataset.stokMinimal) || 0;
+            const satuan = opt.dataset.satuan || 'unit';
 
-        valEl.textContent = `${stok.toLocaleString('id-ID')} ${satuan}`;
-        valEl.className   = stok <= stokMinimal
-            ? 'text-sm font-mono font-semibold text-rose-400'
-            : 'text-sm font-mono font-semibold text-emerald-400';
-        panel.classList.remove('hidden');
-    }
-
-    function updateRakInfo(opt) {
-        const panel = document.getElementById('rak-info');
-        const valEl = document.getElementById('rak-value');
-
-        if (!opt || !opt.value) { panel.classList.add('hidden'); return; }
-        valEl.textContent = opt.dataset.rak || '-';
-        panel.classList.remove('hidden');
-    }
-
-    function updateLokasiInfo(opt) {
-        const panel = document.getElementById('lokasi-info');
-        const valEl = document.getElementById('lokasi-value');
-
-        if (!opt || !opt.value) { panel.classList.add('hidden'); return; }
-        valEl.textContent = opt.dataset.lokasi || '-';
-        panel.classList.remove('hidden');
-    }
-
-    function updateLocked() {
-        const komponenSel = document.getElementById('id_komponen');
-        const jenisSel    = document.getElementById('jenis');
-        const asalSel     = document.getElementById('id_departemen_asal');
-        const tujuanSel   = document.getElementById('id_departemen_tujuan');
-
-        const komponenOpt = komponenSel.options[komponenSel.selectedIndex];
-        const deptId      = komponenOpt?.dataset.departemen;
-        const jenis       = jenisSel.value;
-
-        document.getElementById('id_departemen_asal_hidden')?.remove();
-        document.getElementById('id_departemen_tujuan_hidden')?.remove();
-        asalSel.removeAttribute('disabled');
-        tujuanSel.removeAttribute('disabled');
-
-        if (!deptId || !jenis) return;
-
-        function lockWithHidden(selectEl, hiddenId, hiddenName, value) {
-            selectEl.value = value;
-            selectEl.setAttribute('disabled', 'disabled');
-            const hid   = document.createElement('input');
-            hid.type    = 'hidden';
-            hid.name    = hiddenName;
-            hid.id      = hiddenId;
-            hid.value   = value;
-            selectEl.after(hid);
+            valEl.textContent = `${stok.toLocaleString('id-ID')} ${satuan}`;
+            valEl.className = stok <= stokMinimal
+                ? 'text-sm font-mono font-semibold text-rose-400'
+                : 'text-sm font-mono font-semibold text-emerald-400';
+            panel.classList.remove('hidden');
         }
 
-        if (jenis === 'masuk') {
-            lockWithHidden(tujuanSel, 'id_departemen_tujuan_hidden', 'id_departemen_tujuan', deptId);
-        } else if (jenis === 'keluar') {
-            lockWithHidden(asalSel, 'id_departemen_asal_hidden', 'id_departemen_asal', deptId);
+        function updateRakInfo(opt) {
+            const panel = document.getElementById('rak-info');
+            const valEl = document.getElementById('rak-value');
+
+            if (!opt || !opt.value) { panel.classList.add('hidden'); return; }
+            valEl.textContent = opt.dataset.rak || '-';
+            panel.classList.remove('hidden');
         }
-    }
 
-    $(document).ready(function () {
+        function updateLokasiInfo(opt) {
+            const panel = document.getElementById('lokasi-info');
+            const valEl = document.getElementById('lokasi-value');
 
-        $('#id_komponen').select2({
-            placeholder: "Cari komponen...",
-            allowClear: true,
-            width: 'resolve',
-            dropdownParent: $('form')
-        });
+            if (!opt || !opt.value) { panel.classList.add('hidden'); return; }
+            valEl.textContent = opt.dataset.lokasi || '-';
+            panel.classList.remove('hidden');
+        }
 
-        const sel = document.getElementById('id_komponen');
-        const selectedOpt = sel.options[sel.selectedIndex];
-        updateStokInfo(selectedOpt);
-        updateRakInfo(selectedOpt);
-        updateLokasiInfo(selectedOpt);
-        updateLocked();
+        function updateLocked() {
+            const komponenSel = document.getElementById('id_komponen');
+            const jenisSel = document.getElementById('jenis');
+            const asalSel = document.getElementById('id_departemen_asal');
+            const tujuanSel = document.getElementById('id_departemen_tujuan');
 
-        $('#id_komponen').on('change', function () {
-            const opt = this.options[this.selectedIndex];
-            updateStokInfo(opt);
-            updateRakInfo(opt);
-            updateLokasiInfo(opt);
+            const komponenOpt = komponenSel.options[komponenSel.selectedIndex];
+            const deptId = komponenOpt?.dataset.departemen;
+            const jenis = jenisSel.value;
+
+            document.getElementById('id_departemen_asal_hidden')?.remove();
+            document.getElementById('id_departemen_tujuan_hidden')?.remove();
+            asalSel.removeAttribute('disabled');
+            tujuanSel.removeAttribute('disabled');
+
+            if (!deptId || !jenis) return;
+
+            function lockWithHidden(selectEl, hiddenId, hiddenName, value) {
+                selectEl.value = value;
+                selectEl.setAttribute('disabled', 'disabled');
+                const hid = document.createElement('input');
+                hid.type = 'hidden';
+                hid.name = hiddenName;
+                hid.id = hiddenId;
+                hid.value = value;
+                selectEl.after(hid);
+            }
+
+            if (jenis === 'masuk') {
+                lockWithHidden(tujuanSel, 'id_departemen_tujuan_hidden', 'id_departemen_tujuan', deptId);
+            } else if (jenis === 'keluar') {
+                lockWithHidden(asalSel, 'id_departemen_asal_hidden', 'id_departemen_asal', deptId);
+            }
+        }
+
+        $(document).ready(function () {
+
+            $('#id_komponen').select2({
+                placeholder: "Cari komponen...",
+                allowClear: true,
+                width: 'resolve',
+                dropdownParent: $('form')
+            });
+            $('#id_departemen_asal').select2({
+                placeholder: "Pilih departemen asal...",
+                allowClear: true,
+                width: 'resolve',
+                dropdownParent: $('form')
+            });
+            $('#id_departemen_tujuan').select2({
+                placeholder: "Pilih departemen tujuan...",
+                allowClear: true,
+                width: 'resolve',
+                dropdownParent: $('form')
+            });
+            const sel = document.getElementById('id_komponen');
+            const selectedOpt = sel.options[sel.selectedIndex];
+            updateStokInfo(selectedOpt);
+            updateRakInfo(selectedOpt);
+            updateLokasiInfo(selectedOpt);
             updateLocked();
-        });
 
-        $('#jenis').on('change', function () {
-            updateLocked();
+            $('#id_komponen').on('change', function () {
+                const opt = this.options[this.selectedIndex];
+                updateStokInfo(opt);
+                updateRakInfo(opt);
+                updateLokasiInfo(opt);
+                updateLocked();
+            });
+
+            $('#jenis').on('change', function () {
+                updateLocked();
+            });
         });
-    });
-</script>
+    </script>
 @endsection
