@@ -11,9 +11,9 @@ class MasterController extends Controller
     public function index(Request $request)
     {
         $query = MasterKomponen::with('departemen')->orderBy('nama_komponen', 'asc');
-        if ($request->filled('id_komponen')){
-            $query = $query->where('id', $request->id_komponen);
-        }
+        $query->when(request('id_komponen'), function ($q) {
+            $q->where('id', request('id_komponen'));
+        });
         $komponen = $query->paginate(10);
         $departemen = Departemen::all();
         return view('komponen.index', compact('komponen', 'departemen'));
