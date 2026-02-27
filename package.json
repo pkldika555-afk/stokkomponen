@@ -6,6 +6,8 @@
     },
     "devDependencies": {
         "axios": "^1.1.2",
+        "electron": "^40.6.1",
+        "electron-builder": "^26.8.1",
         "init": "^0.1.2",
         "laravel-vite-plugin": "^2.1.0",
         "npx": "^3.0.0",

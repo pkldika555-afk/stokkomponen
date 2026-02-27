@@ -1,6 +1,169 @@
 @extends('layouts.app')
 
 @section('content')
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .select2-container--default .select2-selection--single {
+            background-color: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 0.5rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        .select2-container--default .select2-selection--single:hover {
+            border-color: #4b5563;
+        }
+
+        .select2-container--default.select2-container--open .select2-selection--single,
+        .select2-container--default.select2-container--focus .select2-selection--single {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 1px #6366f1;
+            outline: none;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #d1d5db;
+            font-size: 0.75rem;
+            line-height: 1rem;
+            padding-left: 0.75rem;
+            padding-right: 2rem;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__placeholder {
+            color: #6b7280;
+            font-size: 0.75rem;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 100%;
+            right: 0.5rem;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow b {
+            border-color: #6b7280 transparent transparent transparent;
+            border-width: 4px 4px 0 4px;
+        }
+
+        .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+            border-color: transparent transparent #6366f1 transparent;
+            border-width: 0 4px 4px 4px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__clear {
+            color: #6b7280;
+            font-size: 1rem;
+            margin-right: 0.25rem;
+            cursor: pointer;
+            transition: color 0.15s;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__clear:hover {
+            color: #f87171;
+        }
+
+        .select2-dropdown {
+            background-color: #111827;
+            border: 1px solid #374151;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 4px 10px -2px rgba(0, 0, 0, 0.4);
+            margin-top: 2px;
+            overflow: hidden;
+        }
+
+        .select2-container--default .select2-search--dropdown {
+            padding: 0.5rem;
+            border-bottom: 1px solid #1f2937;
+        }
+
+        .select2-container--default .select2-search--dropdown .select2-search__field {
+            background-color: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 0.375rem;
+            color: #d1d5db;
+            font-size: 0.75rem;
+            padding: 0.375rem 0.625rem;
+            width: 100%;
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        .select2-container--default .select2-search--dropdown .select2-search__field:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 1px #6366f1;
+        }
+
+        .select2-container--default .select2-search--dropdown .select2-search__field::placeholder {
+            color: #6b7280;
+        }
+
+        .select2-results__options {
+            padding: 0.25rem;
+            max-height: 220px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #374151 transparent;
+        }
+
+        .select2-results__options::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .select2-results__options::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .select2-results__options::-webkit-scrollbar-thumb {
+            background-color: #374151;
+            border-radius: 4px;
+        }
+
+        .select2-container--default .select2-results__option {
+            color: #9ca3af;
+            font-size: 0.75rem;
+            padding: 0.375rem 0.625rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.1s, color 0.1s;
+        }
+
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: #312e81;
+            color: #a5b4fc;
+        }
+
+        .select2-container--default .select2-results__option[aria-selected=true] {
+            background-color: #1e1b4b;
+            color: #818cf8;
+        }
+
+        .select2-container--default .select2-results__option[aria-selected=true]::before {
+            content: "✓ ";
+            font-size: 0.65rem;
+        }
+
+        .select2-results__message,
+        .select2-container--default .select2-results__option[aria-disabled=true] {
+            color: #6b7280;
+            font-size: 0.75rem;
+            padding: 0.5rem 0.625rem;
+            font-style: italic;
+        }
+
+        .select2-container--default .select2-results__group {
+            color: #6366f1;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.5rem 0.625rem 0.25rem;
+        }
+    </style>
     <div class="min-h-screen bg-gray-950 text-gray-100 font-sans">
         <div class="max-w-6xl mx-auto px-6 py-10">
             <div class="flex items-start justify-between mb-8">
@@ -39,11 +202,26 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
                     </svg>
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari komponen..."
-                        class="w-full bg-gray-900 border border-gray-800 text-gray-100 rounded-xl pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition placeholder-gray-600">
+                    <select name="id_komponen" id="filter-komponen">
+                        <option value="">Semua Komponen</option>
+                        @foreach($komponen as $k)
+                            <option value="{{ $k->id }}" {{ request('id_komponen') == $k->id ? 'selected' : '' }}>
+                                {{ $k->nama_komponen }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <button type="submit"
+                        class="bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg px-3 py-2 text-xs font-medium transition-colors shrink-0">
+                        Filter
+                    </button>
                 </div>
+                @if(request()->hasAny(['id_komponen']))
+                    <div class="mt-2 text-right">
+                        <a href="{{ route('komponen.index') }}" class="text-xs text-gray-500 hover:text-gray-300 underline">Reset
+                            filter</a>
+                    </div>
+                @endif
             </form>
-
 
             <div class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-800 flex items-center justify-between">
@@ -103,8 +281,8 @@
                                         <div class="flex items-center gap-3">
                                             <!-- <div class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0"> -->
                                             <!-- <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
-                                                        </svg> -->
+                                                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
+                                                                                                </svg> -->
                                             <!-- </div> -->
                                             <span class="font-medium text-gray-100">{{ $k->tipe }}</span>
                                         </div>
@@ -183,5 +361,16 @@
 
         </div>
     </div>
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/select2.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#filter-komponen').select2({
+                placeholder: "Cari Komponen...",
+                allowClear: true,
+                width: 'resolve',
+                dropdownParent: $('form')
+            });
+        });
+    </script>
 @endsection
